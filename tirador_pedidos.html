@@ -42,7 +42,7 @@ tr:last-child td{border-bottom:none;}
 tr:hover td{background:#FAFAF9;}
 tr:focus-within{outline:none;box-shadow:none;}
 td:nth-child(1),th:nth-child(1){width:36px;}
-td:nth-child(2),th:nth-child(2){width:120px;}
+td:nth-child(2),th:nth-child(2){min-width:80px;}
 td:nth-child(3),th:nth-child(3){width:58px;}
 td:nth-child(4),th:nth-child(4){width:58px;}
 td:nth-child(5),th:nth-child(5){width:58px;}
@@ -165,6 +165,31 @@ td:nth-child(8),th:nth-child(8){width:80px;}
 .wpp-send-btn{display:flex;align-items:center;gap:6px;padding:9px 18px;border:none;border-radius:var(--radius);background:#128C7E;color:#fff;font-size:13px;font-weight:600;font-family:var(--font);cursor:pointer;}
 .wpp-copied{display:none;align-items:center;gap:4px;font-size:13px;color:#25D366;font-weight:600;}
 
+/* Mini agenda de retirada */
+.agenda-form{margin-top:14px;padding:14px;border:1px solid var(--border);border-radius:var(--radius);background:#f9f9f9;display:none;}
+.agenda-form.visivel{display:block;}
+.agenda-titulo{font-size:13px;font-weight:600;color:var(--accent);margin-bottom:12px;}
+.agenda-datas{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px;}
+.agenda-data-btn{padding:8px 14px;border:1.5px solid var(--border);border-radius:var(--radius);background:#fff;font-size:13px;font-family:var(--font);cursor:pointer;color:var(--muted);transition:all .15s;text-align:center;}
+.agenda-data-btn.ativo{border-color:var(--accent);background:var(--accent-light);color:var(--accent);font-weight:600;}
+.agenda-horarios{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:4px;}
+.agenda-hora-btn{padding:7px 12px;border:1.5px solid var(--border);border-radius:var(--radius);background:#fff;font-size:13px;font-family:var(--font);cursor:pointer;color:var(--muted);transition:all .15s;}
+.agenda-hora-btn.ativo{border-color:var(--accent);background:var(--accent-light);color:var(--accent);font-weight:600;}
+.agenda-selecionado{font-size:13px;color:var(--accent);font-weight:600;margin-top:10px;min-height:20px;}
+
+/* Formulário de endereço */
+.endereco-form{margin-top:14px;padding:14px;border:1px solid var(--border);border-radius:var(--radius);background:#f9f9f9;display:none;}
+.endereco-form.visivel{display:block;}
+.endereco-titulo{font-size:13px;font-weight:600;color:var(--accent);margin-bottom:12px;}
+.endereco-row{display:flex;gap:10px;margin-bottom:10px;}
+.endereco-field{flex:1;display:flex;flex-direction:column;gap:4px;}
+.endereco-field label{font-size:11px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.4px;}
+.endereco-field label span{color:var(--danger);}
+.endereco-field input{padding:9px 12px;border:1px solid var(--border);border-radius:var(--radius);font-size:13px;font-family:var(--font);color:var(--text);background:#fff;}
+.endereco-field input:focus{border-color:var(--accent);}
+.endereco-field input.erro{border-color:var(--danger);}
+@media(max-width:600px){.endereco-row{flex-direction:column;gap:8px;}}
+
 /* Histórico */
 .hist-empty{text-align:center;color:var(--muted);padding:2rem;font-size:14px;}
 .hist-card{border:1px solid var(--border);border-radius:var(--radius);background:var(--surface);padding:16px;margin-bottom:12px;}
@@ -211,6 +236,8 @@ td:nth-child(8),th:nth-child(8){width:80px;}
 .sucesso-msg{font-size:14px;color:var(--muted);line-height:1.7;}
 .sucesso-fechar{margin-top:20px;padding:10px 28px;border:none;border-radius:var(--radius);background:var(--accent);color:#fff;font-size:14px;font-weight:600;font-family:var(--font);cursor:pointer;}
 /* Pop-up de informações do produto */
+.info-alergicos{background:#FFF8E1;border:1px solid #FFD54F;border-radius:8px;padding:10px 14px;font-size:13px;color:#795548;line-height:1.6;}
+.info-alergicos::before{content:"⚠️ ";font-size:14px;}
 .info-overlay{display:none;position:fixed;inset:0;z-index:3000;background:rgba(0,0,0,.5);align-items:flex-end;justify-content:center;}
 .info-overlay.aberto{display:flex;}
 @media(min-width:601px){.info-overlay{align-items:center;}}
@@ -224,10 +251,13 @@ td:nth-child(8),th:nth-child(8){width:80px;}
 .info-fotos{display:flex;gap:8px;overflow-x:auto;}
 .info-foto{width:120px;height:120px;object-fit:cover;border-radius:8px;flex-shrink:0;}
 .info-descricao{font-size:14px;color:var(--muted);line-height:1.6;}
-.info-tabela{width:100%;border-collapse:collapse;font-size:13px;}
+.info-tabela{width:100%;border-collapse:collapse;font-size:13px;table-layout:fixed;}
+.info-tabela tr{display:table-row!important;}
+.info-tabela td{display:table-cell!important;width:50%;}
 .info-tabela tr:nth-child(even){background:#F7F5F2;}
 .info-tabela td{padding:6px 10px;border-bottom:1px solid #F0EDE9;}
-.info-tabela td:last-child{text-align:right;font-family:var(--mono);}
+.info-tabela td:first-child{color:var(--muted);font-size:12px;}
+.info-tabela td:last-child{text-align:right;font-family:var(--mono);font-weight:600;}
 .info-btn{font-size:10px;font-weight:600;color:var(--accent);background:var(--accent-light);border:1px solid var(--accent);border-radius:10px;padding:2px 6px;cursor:pointer;white-space:nowrap;flex-shrink:0;}
 /* Botão WhatsApp flutuante */
 .wpp-atendimento{
@@ -304,6 +334,11 @@ td:nth-child(8),th:nth-child(8){width:80px;}
   <div id="view-carrinho" style="display:none">
     <div class="cart-box">
       <div id="cart-list"></div>
+      <div style="margin-bottom:12px;">
+        <button onclick="showTab('produtos')" style="width:100%;padding:10px;border:1.5px dashed var(--accent);border-radius:var(--radius);background:none;color:var(--accent);font-size:13px;font-weight:600;font-family:var(--font);cursor:pointer;">
+          ＋ Adicionar mais itens
+        </button>
+      </div>
       <div id="cart-summary" style="display:none">
         <div class="cart-total-row">
           <span>Total do pedido</span>
@@ -313,7 +348,54 @@ td:nth-child(8),th:nth-child(8){width:80px;}
           <button class="entrega-btn" id="btn-entrega" onclick="selecionarEntrega('entrega')">🚚 Entrega</button>
           <button class="entrega-btn" id="btn-retirada" onclick="selecionarEntrega('retirada')">🏪 Retirada</button>
         </div>
+        <div class="agenda-form" id="agenda-form">
+          <div class="agenda-titulo">📅 Agendar retirada</div>
+          <div class="agenda-datas" id="agenda-datas"></div>
+          <div class="agenda-horarios" id="agenda-horarios"></div>
+          <div class="agenda-selecionado" id="agenda-selecionado"></div>
+          <div class="endereco-field" style="margin-top:12px;">
+            <label>Nome de quem vai retirar <span style="color:var(--danger)">*</span></label>
+            <input type="text" id="agenda-retirada-nome" placeholder="Nome completo de quem vai retirar">
+          </div>
+        </div>
         <div class="aviso-minimo" id="aviso-minimo">⚠️ Pedido mínimo de R$ 50,00 para entrega. Adicione mais produtos ou escolha Retirada.</div>
+        <div class="endereco-form" id="endereco-form">
+          <div class="endereco-titulo">📍 Endereço de entrega</div>
+          <div class="endereco-row">
+            <div class="endereco-field" style="max-width:140px;">
+              <label>CEP <span>*</span></label>
+              <input type="text" id="end-cep" placeholder="00000-000" maxlength="9" oninput="mascaraCep(this);buscarCep(this);">
+            </div>
+            <div class="endereco-field">
+              <label>Rua <span>*</span></label>
+              <input type="text" id="end-rua" placeholder="Nome da rua">
+            </div>
+          </div>
+          <div class="endereco-row">
+            <div class="endereco-field" style="max-width:100px;">
+              <label>Número <span>*</span></label>
+              <input type="text" id="end-numero" placeholder="Nº">
+            </div>
+            <div class="endereco-field">
+              <label>Bairro <span>*</span></label>
+              <input type="text" id="end-bairro" placeholder="Seu bairro">
+            </div>
+            <div class="endereco-field">
+              <label>Cidade <span>*</span></label>
+              <input type="text" id="end-cidade" placeholder="Sua cidade">
+            </div>
+          </div>
+          <div class="endereco-row">
+            <div class="endereco-field">
+              <label>Complemento</label>
+              <input type="text" id="end-complemento" placeholder="Apto, bloco... (opcional)">
+            </div>
+            <div class="endereco-field">
+              <label>Ponto de referência</label>
+              <input type="text" id="end-referencia" placeholder="Próximo a... (opcional)">
+            </div>
+          </div>
+        </div>
         <button class="enviar-btn" id="enviar-btn" onclick="enviarPedido()">✅ Enviar pedido por WhatsApp</button>
       </div>
     </div>
@@ -355,6 +437,7 @@ td:nth-child(8),th:nth-child(8){width:80px;}
     <div class="sucesso-emoji">🎉</div>
     <div class="sucesso-titulo">⚠️ Importante!</div>
     <div class="sucesso-msg">Pedido recebido!<br><br>Ainda é necessário confirmar método de pagamento e entrega/retirada no WhatsApp.</div>
+    <div id="sucesso-agendamento" style="display:none;margin-top:12px;padding:10px 14px;background:var(--accent-light);border-radius:var(--radius);font-size:13px;color:var(--accent);font-weight:600;"></div>
     <button class="sucesso-fechar" onclick="fecharSucesso()">Fechar</button>
   </div>
 </div>
@@ -366,19 +449,19 @@ var produtos=[
   {cod:"221",nome:"Semente de Abóbora",kg:69.90,g100:6.99,cat:"Sementes",
     fotos:["https://images.unsplash.com/photo-1604147706283-d7119b5b822c?w=400&fit=crop"],
     descricao:"Semente de abóbora crua, rica em zinco, magnésio e gorduras saudáveis. Ótima para consumo direto, saladas e granolas.",
-    nutricional:[["Porção","100g"],["Calorias","559 kcal"],["Proteínas","30g"],["Carboidratos","11g"],["Gorduras","49g"],["Fibras","6g"],["Zinco","7,8mg"]]},
+    nutricional:[["Porção","100g"],["Calorias","559 kcal"],["Proteínas","30g"],["Carboidratos","11g"],["Gorduras","49g"],["Fibras","6g"],["Zinco","7,8mg"]],alergicos:"Pode conter traços de amendoim, castanhas e glúten."},
   {cod:"219",nome:"Semente de Girassol",kg:29.90,g100:2.99,cat:"Sementes",
     fotos:["https://images.unsplash.com/photo-1548012607-8cc0c91b14e6?w=400&fit=crop"],
     descricao:"Semente de girassol torrada e sem casca. Rica em vitamina E, selênio e ácidos graxos essenciais.",
-    nutricional:[["Porção","100g"],["Calorias","584 kcal"],["Proteínas","21g"],["Carboidratos","20g"],["Gorduras","51g"],["Fibras","9g"],["Vitamina E","35mg"]]},
+    nutricional:[["Porção","100g"],["Calorias","584 kcal"],["Proteínas","21g"],["Carboidratos","20g"],["Gorduras","51g"],["Fibras","9g"],["Vitamina E","35mg"]],alergicos:"Pode conter traços de amendoim e castanhas."},
   {cod:"301",nome:"Castanha de Caju",kg:89.90,g100:8.99,cat:"Castanhas",
     fotos:["https://images.unsplash.com/photo-1536304993881-ff6e9eefa2a6?w=400&fit=crop"],
     descricao:"Castanha de caju torrada e salgada, rica em ferro, cobre e gorduras monoinsaturadas. Fonte natural de energia.",
-    nutricional:[["Porção","100g"],["Calorias","553 kcal"],["Proteínas","18g"],["Carboidratos","30g"],["Gorduras","44g"],["Fibras","3g"],["Ferro","6,7mg"]]},
+    nutricional:[["Porção","100g"],["Calorias","553 kcal"],["Proteínas","18g"],["Carboidratos","30g"],["Gorduras","44g"],["Fibras","3g"],["Ferro","6,7mg"]],alergicos:"Contém castanhas. Pode conter traços de amendoim e outros frutos secos."},
   {cod:"302",nome:"Amendoim Torrado",kg:19.90,g100:1.99,cat:"Castanhas",
     fotos:["https://images.unsplash.com/photo-1574323347407-f5e1ad6d020b?w=400&fit=crop"],
     descricao:"Amendoim torrado e salgado, excelente fonte de proteínas e gorduras saudáveis. Perfeito para snacks.",
-    nutricional:[["Porção","100g"],["Calorias","567 kcal"],["Proteínas","26g"],["Carboidratos","16g"],["Gorduras","49g"],["Fibras","9g"],["Resveratrol","Presente"]]},
+    nutricional:[["Porção","100g"],["Calorias","567 kcal"],["Proteínas","26g"],["Carboidratos","16g"],["Gorduras","49g"],["Fibras","9g"],["Resveratrol","Presente"]],alergicos:"Contém amendoim. Pode conter traços de outras castanhas e glúten."},
   {cod:"401",nome:"Alho em Pó",kg:38.90,g100:3.89,cat:"Temperos",
     fotos:["https://images.unsplash.com/photo-1615485500704-8e990f9900f7?w=400&fit=crop"],
     descricao:"Alho desidratado e triturado, concentrado de sabor. Ideal para temperar carnes, molhos e marinadas.",
@@ -417,6 +500,14 @@ function abrirInfo(cod){
   document.getElementById("info-fotos").innerHTML=(p.fotos||[]).map(f=>`<img class="info-foto" src="${f}" alt="${p.nome}">`).join("")||"<span style='color:var(--muted);font-size:13px'>Sem fotos disponíveis</span>";
   document.getElementById("info-descricao").textContent=p.descricao||"Sem descrição disponível.";
   document.getElementById("info-tabela").innerHTML=(p.nutricional||[]).map(r=>`<tr><td>${r[0]}</td><td>${r[1]}</td></tr>`).join("")||"<tr><td colspan='2' style='color:var(--muted)'>Sem informações nutricionais</td></tr>";
+  var alergicosSecao=document.getElementById("info-alergicos-secao");
+  var alergicosEl=document.getElementById("info-alergicos");
+  if(p.alergicos){
+    alergicosEl.textContent=p.alergicos;
+    alergicosSecao.style.display="block";
+  }else{
+    alergicosSecao.style.display="none";
+  }
   document.getElementById("info-overlay").classList.add("aberto");
 }
 
@@ -481,6 +572,22 @@ function addToCart(cod){
 
 function removeFromCart(i){cart.splice(i,1);updateCartBadge();renderCart();renderTable();}
 
+function changeCartQty(i,delta){
+  var p=produtos.find(x=>x.cod===cart[i].cod);
+  var min=minPara(p);
+  var novaQty=cart[i].qty+(delta*50);
+  if(novaQty<min){
+    if(confirm("Remover "+cart[i].nome+" do carrinho?")){
+      removeFromCart(i);
+    }
+    return;
+  }
+  cart[i].qty=novaQty;
+  cart[i].val=p.g100*(novaQty/100);
+  renderCart();
+  renderTable();
+}
+
 function updateCartBadge(){
   var b=document.getElementById("cart-badge");
   b.textContent=cart.length;
@@ -489,17 +596,174 @@ function updateCartBadge(){
 
 function selecionarEntrega(tipo){
   tipoEntrega=tipo;
-  console.log("tipoEntrega definido como:", tipoEntrega);
   document.getElementById("btn-entrega").classList.toggle("ativo",tipo==="entrega");
   document.getElementById("btn-retirada").classList.toggle("ativo",tipo==="retirada");
   var total=cart.reduce((a,b)=>a+b.val,0);
   var aviso=document.getElementById("aviso-minimo");
   var enviar=document.getElementById("enviar-btn");
+  var endForm=document.getElementById("endereco-form");
+  var agendaForm=document.getElementById("agenda-form");
   if(tipo==="entrega"&&total<50){
     aviso.style.display="block";enviar.style.display="none";
+    endForm.classList.remove("visivel");
+    agendaForm.classList.remove("visivel");
+  }else if(tipo==="entrega"){
+    aviso.style.display="none";enviar.style.display="block";
+    endForm.classList.add("visivel");
+    agendaForm.classList.remove("visivel");
   }else{
     aviso.style.display="none";enviar.style.display="block";
+    endForm.classList.remove("visivel");
+    agendaForm.classList.add("visivel");
+    gerarAgenda();
   }
+}
+
+// Variáveis da agenda
+var agendaData=null, agendaHora=null;
+
+function horariosParaDia(diaSemana){
+  // 0=Dom, 1=Seg, 2=Ter, 3=Qua, 4=Qui, 5=Sex, 6=Sáb
+  if(diaSemana===0)return []; // Domingo fechado
+  if(diaSemana===6)return ["11:00","12:00","13:00"]; // Sábado 11h-13h
+  return ["11:00","12:00","13:00","14:00","15:00","16:00","17:00","18:00"]; // Seg-Sex 11h-18h
+}
+
+function gerarAgenda(){
+  var agora=new Date();
+  var minimoRetirada=new Date(agora.getTime()+(2*60*60*1000)); // mínimo 2h
+  var datas=[];
+
+  for(var i=0;i<14;i++){
+    var d=new Date(agora);
+    d.setDate(d.getDate()+i);
+    d.setHours(0,0,0,0);
+    if(d.getDay()===0)continue; // Pular domingo
+    datas.push(d);
+    if(datas.length>=7)break;
+  }
+
+  var diasSemana=["Dom","Seg","Ter","Qua","Qui","Sex","Sáb"];
+  var meses=["Jan","Fev","Mar","Abr","Mai","Jun","Jul","Ago","Set","Out","Nov","Dez"];
+  var datasEl=document.getElementById("agenda-datas");
+  datasEl.innerHTML="";
+
+  datas.forEach(function(d){
+    var horarios=horariosParaDia(d.getDay());
+    var temHorario=horarios.some(function(h){
+      var partes=h.split(":");
+      var dt=new Date(d);
+      dt.setHours(parseInt(partes[0]),parseInt(partes[1]),0,0);
+      return dt>minimoRetirada;
+    });
+    if(!temHorario)return;
+
+    var btn=document.createElement("button");
+    btn.className="agenda-data-btn";
+    btn.innerHTML="<strong>"+diasSemana[d.getDay()]+"</strong><br>"+d.getDate()+" "+meses[d.getMonth()];
+    btn.onclick=(function(dia){
+      return function(){
+        agendaData=dia;
+        agendaHora=null;
+        document.querySelectorAll(".agenda-data-btn").forEach(function(b){b.classList.remove("ativo");});
+        btn.classList.add("ativo");
+        renderHorarios(dia,minimoRetirada);
+        atualizarAgendaSelecionado();
+      };
+    })(d);
+    datasEl.appendChild(btn);
+  });
+}
+
+function renderHorarios(data,minimoRetirada){
+  var horarios=horariosParaDia(data.getDay());
+  var horasEl=document.getElementById("agenda-horarios");
+  horasEl.innerHTML="<div style='font-size:11px;color:var(--muted);width:100%;margin-bottom:4px;'>Selecione o horário:</div>";
+  agendaHora=null;
+
+  horarios.forEach(function(h){
+    var partes=h.split(":");
+    var dt=new Date(data);
+    dt.setHours(parseInt(partes[0]),parseInt(partes[1]),0,0);
+    if(dt<=minimoRetirada)return;
+
+    var btn=document.createElement("button");
+    btn.className="agenda-hora-btn";
+    btn.textContent=h;
+    btn.onclick=function(){
+      agendaHora=h;
+      document.querySelectorAll(".agenda-hora-btn").forEach(function(b){b.classList.remove("ativo");});
+      btn.classList.add("ativo");
+      atualizarAgendaSelecionado();
+    };
+    horasEl.appendChild(btn);
+  });
+
+  // Aviso se pressa
+  var aviso=document.createElement("div");
+  aviso.style.cssText="font-size:11px;color:var(--muted);width:100%;margin-top:8px;";
+  aviso.innerHTML='⚡ Com pressa? <a href="https://wa.me/5548991446378?text=Preciso+de+atendimento+urgente!" target="_blank" style="color:var(--accent);font-weight:600;">Fale conosco no WhatsApp</a>';
+  horasEl.appendChild(aviso);
+}
+
+function atualizarAgendaSelecionado(){
+  var el=document.getElementById("agenda-selecionado");
+  if(agendaData&&agendaHora){
+    var diasSemana=["Domingo","Segunda","Terça","Quarta","Quinta","Sexta","Sábado"];
+    var meses=["Jan","Fev","Mar","Abr","Mai","Jun","Jul","Ago","Set","Out","Nov","Dez"];
+    el.textContent="📅 "+diasSemana[agendaData.getDay()]+", "+agendaData.getDate()+" de "+meses[agendaData.getMonth()]+" às "+agendaHora+" selecionado.";
+  }else{
+    el.textContent="";
+  }
+}
+
+function validarAgenda(){
+  if(tipoEntrega!=="retirada")return true;
+  if(!agendaData||!agendaHora){
+    alert("Por favor, selecione uma data e horário para a retirada.");
+    return false;
+  }
+  var nomeRetirada=document.getElementById("agenda-retirada-nome").value.trim();
+  if(!nomeRetirada){
+    document.getElementById("agenda-retirada-nome").classList.add("erro");
+    alert("Por favor, informe o nome de quem vai retirar.");
+    return false;
+  }
+  document.getElementById("agenda-retirada-nome").classList.remove("erro");
+  return true;
+}
+
+function mascaraCep(el){
+  var v=el.value.replace(/[^0-9]/g,"");
+  if(v.length>5)v=v.slice(0,5)+"-"+v.slice(5,8);
+  el.value=v;
+}
+
+async function buscarCep(el){
+  var cep=el.value.replace(/[^0-9]/g,"");
+  if(cep.length!==8)return;
+  try{
+    var res=await fetch("https://viacep.com.br/ws/"+cep+"/json/");
+    var data=await res.json();
+    if(!data.erro){
+      document.getElementById("end-rua").value=data.logradouro||"";
+      document.getElementById("end-bairro").value=data.bairro||"";
+      document.getElementById("end-cidade").value=data.localidade||"";
+    }
+  }catch(e){}
+}
+
+function validarEndereco(){
+  if(tipoEntrega!=="entrega")return true;
+  var campos=["end-cep","end-rua","end-numero","end-bairro","end-cidade"];
+  var ok=true;
+  campos.forEach(function(id){
+    var el=document.getElementById(id);
+    if(!el.value.trim()){el.classList.add("erro");ok=false;}
+    else{el.classList.remove("erro");}
+  });
+  if(!ok)alert("Preencha todos os campos obrigatórios do endereço.");
+  return ok;
 }
 
 function gerarTextoWpp(){
@@ -514,8 +778,27 @@ function gerarTextoWpp(){
   var numStr=window._numeroPedido?` — Pedido #${window._numeroPedido}`:"";
   var c=cliente||{};
   var info=c.nome?`👤 *${c.nome}*${c.email?" — "+c.email:""}\n📍 ${c.bairro}, ${c.cidade}${c.telefone?"\n📞 "+c.telefone:""}\n\n`:"";
+  var agendaStr="";
+  if(tipoEntrega==="retirada"&&agendaData&&agendaHora){
+    var diasSemana=["Domingo","Segunda","Terça","Quarta","Quinta","Sexta","Sábado"];
+    var meses=["Jan","Fev","Mar","Abr","Mai","Jun","Jul","Ago","Set","Out","Nov","Dez"];
+    var nomeRetirada=document.getElementById("agenda-retirada-nome").value.trim();
+    agendaStr="\n📅 Retirada agendada: "+diasSemana[agendaData.getDay()]+", "+agendaData.getDate()+" de "+meses[agendaData.getMonth()]+" às "+agendaHora+
+    (nomeRetirada?"\n👤 Retira: "+nomeRetirada:"");
+  }
   var entregaStr=tipoEntrega==="entrega"?"🚚 Entrega":"🏪 Retirada";
-  return`🛒 *Pedido${numStr} — ${data}*\n\n${info}📦 ${entregaStr}\n\n${linhas.join("\n")}\n\n*Total: ${fmtPrice(total)}*`;
+  var enderecoStr="";
+  if(tipoEntrega==="entrega"){
+    var cep=document.getElementById("end-cep").value;
+    var rua=document.getElementById("end-rua").value;
+    var num=document.getElementById("end-numero").value;
+    var bairro=document.getElementById("end-bairro").value;
+    var cidade=document.getElementById("end-cidade").value;
+    var comp=document.getElementById("end-complemento").value;
+    var ref=document.getElementById("end-referencia").value;
+    enderecoStr="\n📍 "+rua+", "+num+(comp?" — "+comp:"")+"\n    "+bairro+", "+cidade+" — CEP: "+cep+(ref?"\n    Ref: "+ref:"");
+  }
+  return`🛒 *Pedido${numStr} — ${data}*\n\n${info}📦 ${entregaStr}${enderecoStr}${agendaStr}\n\n${linhas.join("\n")}\n\n*Total: ${fmtPrice(total)}*`;
 }
 
 function copiarWpp(){
@@ -534,6 +817,8 @@ function abrirWhatsapp(){
 }
 
 async function enviarPedido(){
+  if(!validarEndereco())return;
+  if(!validarAgenda())return;
   var txt=document.getElementById("wpp-texto").value;
   if(!txt)return;
   console.log("tipoEntrega no momento do envio:", tipoEntrega);
@@ -567,7 +852,21 @@ async function enviarPedido(){
           itens:JSON.stringify(cart),
           total:fmtPrice(total),
           dispositivo:/Mobi|Android|iPhone|iPad/i.test(navigator.userAgent)?"Mobile":"Desktop",
-          entrega:tipoEntrega==="entrega"?"Entrega":tipoEntrega==="retirada"?"Retirada":"Não informado"
+          entrega:tipoEntrega==="entrega"?"Entrega":tipoEntrega==="retirada"?"Retirada":"Não informado",
+          agendamento:tipoEntrega==="retirada"&&agendaData&&agendaHora?
+            (["Domingo","Segunda","Terça","Quarta","Quinta","Sexta","Sábado"][agendaData.getDay()]+
+            " "+agendaData.getDate()+"/"+("0"+(agendaData.getMonth()+1)).slice(-2)+
+            "/"+agendaData.getFullYear()+" às "+agendaHora+
+            (document.getElementById("agenda-retirada-nome").value.trim()?" — Retira: "+document.getElementById("agenda-retirada-nome").value.trim():"")):"",
+          endereco:tipoEntrega==="entrega"?(
+            (document.getElementById("end-rua").value||"")+" "+
+            (document.getElementById("end-numero").value||"")+
+            (document.getElementById("end-complemento").value?" — "+document.getElementById("end-complemento").value:"")+
+            ", "+document.getElementById("end-bairro").value+
+            ", "+document.getElementById("end-cidade").value+
+            " — CEP: "+document.getElementById("end-cep").value+
+            (document.getElementById("end-referencia").value?" | Ref: "+document.getElementById("end-referencia").value:"")
+          ):""
         })
       });
       var json=await res.json();
@@ -580,6 +879,17 @@ async function enviarPedido(){
   }
 
   window.open("https://wa.me/5548991446378?text="+encodeURIComponent(txt),"_blank","noopener");
+  // Mostrar agendamento no modal de sucesso
+  var sucAg=document.getElementById("sucesso-agendamento");
+  if(tipoEntrega==="retirada"&&agendaData&&agendaHora){
+    var diasSemana=["Domingo","Segunda","Terça","Quarta","Quinta","Sexta","Sábado"];
+    var meses=["Jan","Fev","Mar","Abr","Mai","Jun","Jul","Ago","Set","Out","Nov","Dez"];
+    var nomeRet=document.getElementById("agenda-retirada-nome").value.trim();
+    sucAg.innerHTML="📅 Retirada agendada para:<br><strong>"+diasSemana[agendaData.getDay()]+", "+agendaData.getDate()+" de "+meses[agendaData.getMonth()]+" às "+agendaHora+"</strong>"+(nomeRet?"<br>👤 Retira: "+nomeRet:"");
+    sucAg.style.display="block";
+  }else{
+    sucAg.style.display="none";
+  }
   lancarConfetti();
   document.getElementById("sucesso-overlay").classList.add("ativo");
 }
@@ -613,12 +923,18 @@ function renderCart(){
   var total=0;
   el.innerHTML=cart.map((item,i)=>{
     total+=item.val;
+    var step=50;
+    var qtdFmt=item.qty>=1000?(item.qty/1000).toFixed(1).replace(".",",")+"kg":item.qty+"g";
     return`<div class="cart-item">
       <div style="flex:1">
         <div class="cart-item-name">${item.nome}</div>
-        <div class="cart-item-sub">${item.qty}g</div>
+        <div class="cart-item-sub">${fmtPrice(item.val)}</div>
       </div>
-      <span class="cart-item-price">${fmtPrice(item.val)}</span>
+      <div class="qty-ctrl" style="gap:4px;">
+        <button class="qty-btn" style="width:22px;height:22px;font-size:14px;" onclick="changeCartQty(${i},-1)">−</button>
+        <span class="qty-val" style="width:38px;font-size:11px;">${qtdFmt}</span>
+        <button class="qty-btn" style="width:22px;height:22px;font-size:14px;" onclick="changeCartQty(${i},1)">+</button>
+      </div>
       <button class="cart-remove" onclick="removeFromCart(${i})">✕</button>
     </div>`;
   }).join("");
@@ -802,6 +1118,10 @@ renderCats();renderTable();
     <div class="info-secao">
       <div class="info-secao-titulo">🥗 Tabela Nutricional</div>
       <table class="info-tabela" id="info-tabela"></table>
+    </div>
+    <div class="info-secao" id="info-alergicos-secao" style="display:none">
+      <div class="info-secao-titulo">⚠️ Informação para Alérgicos</div>
+      <div class="info-alergicos" id="info-alergicos"></div>
     </div>
   </div>
 </div>
