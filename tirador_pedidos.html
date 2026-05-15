@@ -500,37 +500,69 @@ function renderCart(){
   wppSection.style.display="block";
 }
 
-function carregarHistorico(){
+async function carregarHistorico(){
   var el=document.getElementById("hist-list");
+  console.log("carregarHistorico chamado, cliente:", cliente);
   if(!cliente){
     el.innerHTML='<div class="hist-empty">Faça sua identificação para ver seus pedidos.</div>';
     return;
   }
-  var pedidosLocais=JSON.parse(localStorage.getItem("pedidos_locais")||"[]");
-  if(!pedidosLocais.length){
-    el.innerHTML='<div class="hist-empty">Nenhum pedido encontrado ainda.</div>';
-    return;
+  el.innerHTML='<div class="hist-empty">Carregando...</div>';
+  try{
+    var res=await fetch(API_URL+"?action=buscarPedidos&email="+encodeURIComponent(cliente.email)+"&telefone="+encodeURIComponent(cliente.telefone));
+    var data=await res.json();
+    if(!data.ok||!data.pedidos.length){
+      el.innerHTML='<div class="hist-empty">Nenhum pedido encontrado ainda.</div>';
+      return;
+    }
+    el.innerHTML=data.pedidos.map(function(p){
+      var itens=[];
+      try{itens=JSON.parse(p.itens);}catch(e){}
+      var statusClass=p.status==="Aguardando separação"?"aguardando":p.status==="Pedido concluído"?"concluido":"outros";
+      return'<div class="hist-card">'+
+        '<div class="hist-header">'+
+          '<div>'+
+            '<div class="hist-id">Pedido #'+p.numero+'</div>'+
+            '<div class="hist-data">'+p.data+'</div>'+
+          '</div>'+
+          '<span class="hist-status '+statusClass+'">'+p.status+'</span>'+
+        '</div>'+
+        itens.map(function(i){
+          var qtdFmt=i.qty>=1000?(i.qty/1000).toFixed(1).replace(".",",")+"kg":i.qty+"g";
+          return'<div class="hist-item">• '+i.nome+' — '+qtdFmt+'</div>';
+        }).join("")+
+        '<div class="hist-total"><span>Total</span><span class="hist-total-val">'+p.total+'</span></div>'+
+      '</div>';
+    }).join("");
+  }catch(e){
+    // Fallback para localStorage
+    var pedidosLocais=JSON.parse(localStorage.getItem("pedidos_locais")||"[]");
+    if(!pedidosLocais.length){
+      el.innerHTML='<div class="hist-empty">Nenhum pedido encontrado ainda.</div>';
+      return;
+    }
+    el.innerHTML=pedidosLocais.map(function(p){
+      var itens=[];
+      try{itens=JSON.parse(p.itens);}catch(e){}
+      var statusClass=p.status==="Aguardando separação"?"aguardando":p.status==="Pedido concluído"?"concluido":"outros";
+      return'<div class="hist-card">'+
+        '<div class="hist-header">'+
+          '<div>'+
+            '<div class="hist-id">Pedido #'+p.numero+'</div>'+
+            '<div class="hist-data">'+p.data+'</div>'+
+          '</div>'+
+          '<span class="hist-status '+statusClass+'">'+p.status+'</span>'+
+        '</div>'+
+        itens.map(function(i){
+          var qtdFmt=i.qty>=1000?(i.qty/1000).toFixed(1).replace(".",",")+"kg":i.qty+"g";
+          return'<div class="hist-item">• '+i.nome+' — '+qtdFmt+'</div>';
+        }).join("")+
+        '<div class="hist-total"><span>Total</span><span class="hist-total-val">'+p.total+'</span></div>'+
+      '</div>';
+    }).join("");
   }
-  el.innerHTML=pedidosLocais.map(p=>{
-    var itens=[];
-    try{itens=JSON.parse(p.itens);}catch(e){}
-    var statusClass=p.status==="Aguardando separação"?"aguardando":p.status==="Pedido concluído"?"concluido":"outros";
-    return`<div class="hist-card">
-      <div class="hist-header">
-        <div>
-          <div class="hist-id">Pedido #${p.numero}</div>
-          <div class="hist-data">${p.data}</div>
-        </div>
-        <span class="hist-status ${statusClass}">${p.status}</span>
-      </div>
-      ${itens.map(i=>{
-        var qtdFmt=i.qty>=1000?(i.qty/1000).toFixed(1).replace(".",",")+"kg":i.qty+"g";
-        return`<div class="hist-item">• ${i.nome} — ${qtdFmt}</div>`;
-      }).join("")}
-      <div class="hist-total"><span>Total</span><span class="hist-total-val">${p.total}</span></div>
-    </div>`;
-  }).join("");
 }
+
 
 async function confirmarIdentificacao(){
   var nome=document.getElementById("id-nome").value.trim();
