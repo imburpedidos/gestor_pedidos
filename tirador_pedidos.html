@@ -112,18 +112,20 @@ td:nth-child(8),th:nth-child(8){width:80px;}
   }
   td:nth-child(5)::before{content:"100g";font-size:10px;color:var(--faint);}
 
-  /* td6: Quantidade — Q5: linha 2, col central */
+  /* td6: Quantidade — Q5: linha 2, col central, deslocado para direita */
   td:nth-child(6){
     grid-column:2;grid-row:2;
-    justify-content:center;align-items:center;
+    justify-content:flex-end;align-items:center;
+    padding-right:8px;
   }
   td:nth-child(6) .qty-btn{width:26px!important;height:26px!important;font-size:17px!important;}
   td:nth-child(6) .qty-val{width:34px!important;font-size:11px!important;text-align:center;}
 
-  /* td7: Total — Q6: linha 3, col central */
+  /* td7: Total — Q6: linha 3, col central, alinhado com medidor */
   td:nth-child(7){
     grid-column:2;grid-row:3;
-    justify-content:center;align-items:center;
+    justify-content:flex-end;align-items:center;
+    padding-right:8px;
     font-size:13px;font-weight:600;color:var(--accent);
   }
 
