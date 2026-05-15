@@ -417,6 +417,7 @@ function abrirWhatsapp(){
 async function enviarPedido(){
   var txt=document.getElementById("wpp-texto").value;
   if(!txt)return;
+  console.log("tipoEntrega no momento do envio:", tipoEntrega);
 
   // Salvar localmente
   var pedidosLocais=JSON.parse(localStorage.getItem("pedidos_locais")||"[]");
