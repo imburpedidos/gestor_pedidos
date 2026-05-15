@@ -447,7 +447,7 @@ async function enviarPedido(){
           itens:JSON.stringify(cart),
           total:fmtPrice(total),
           dispositivo:/Mobi|Android|iPhone|iPad/i.test(navigator.userAgent)?"Mobile":"Desktop",
-          entrega:tipoEntrega==="entrega"?"Entrega":"Retirada"
+          entrega:tipoEntrega==="entrega"?"Entrega":tipoEntrega==="retirada"?"Retirada":"Não informado"
         })
       });
       var json=await res.json();
