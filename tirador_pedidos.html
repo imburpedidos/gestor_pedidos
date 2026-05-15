@@ -371,6 +371,7 @@ function updateCartBadge(){
 
 function selecionarEntrega(tipo){
   tipoEntrega=tipo;
+  console.log("tipoEntrega definido como:", tipoEntrega);
   document.getElementById("btn-entrega").classList.toggle("ativo",tipo==="entrega");
   document.getElementById("btn-retirada").classList.toggle("ativo",tipo==="retirada");
   var total=cart.reduce((a,b)=>a+b.val,0);
@@ -583,7 +584,7 @@ async function confirmarIdentificacao(){
   document.getElementById("id-overlay").classList.remove("aberto");
   document.getElementById("id-loading").style.display="none";
   mostrarClienteLogado();
-  if(window._pedidoPendente){window._pedidoPendente=false;enviarPedido();}
+  if(window._pedidoPendente){window._pedidoPendente=false;if(window._tipoEntregaPendente){tipoEntrega=window._tipoEntregaPendente;window._tipoEntregaPendente=null;}enviarPedido();}
   else{renderTable();showTab("historico");carregarHistorico();}
 }
 
