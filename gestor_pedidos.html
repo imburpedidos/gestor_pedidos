@@ -502,6 +502,7 @@ function renderCart(){
 
 async function carregarHistorico(){
   var el=document.getElementById("hist-list");
+  console.log("carregarHistorico chamado, cliente:", cliente);
   if(!cliente){
     el.innerHTML='<div class="hist-empty">Faça sua identificação para ver seus pedidos.</div>';
     return;
