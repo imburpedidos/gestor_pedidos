@@ -485,6 +485,13 @@ function renderCart(){
     return;
   }
 
+  // Restaurar seleção de entrega se já tinha sido escolhida
+  if(tipoEntrega){
+    document.getElementById("btn-entrega").classList.toggle("ativo",tipoEntrega==="entrega");
+    document.getElementById("btn-retirada").classList.toggle("ativo",tipoEntrega==="retirada");
+    document.getElementById("enviar-btn").style.display="block";
+  }
+
   var total=0;
   el.innerHTML=cart.map((item,i)=>{
     total+=item.val;
