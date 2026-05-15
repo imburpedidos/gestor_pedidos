@@ -42,12 +42,13 @@ tr:last-child td{border-bottom:none;}
 tr:hover td{background:#FAFAF9;}
 tr:focus-within{outline:none;box-shadow:none;}
 td:nth-child(1),th:nth-child(1){width:36px;}
-td:nth-child(2),th:nth-child(2){width:90px;}
+td:nth-child(2),th:nth-child(2){min-width:80px;}
 td:nth-child(3),th:nth-child(3){width:58px;}
 td:nth-child(4),th:nth-child(4){width:58px;}
-td:nth-child(5),th:nth-child(5){width:100px;}
-td:nth-child(6),th:nth-child(6){width:68px;}
-td:nth-child(7),th:nth-child(7){width:80px;}
+td:nth-child(5),th:nth-child(5){width:58px;}
+td:nth-child(6),th:nth-child(6){width:100px;}
+td:nth-child(7),th:nth-child(7){width:68px;}
+td:nth-child(8),th:nth-child(8){width:80px;}
 .cod{font-family:var(--mono);font-size:10px;color:var(--faint);}
 .nome-cell{font-size:12px;font-weight:500;line-height:1.3;}
 .nome-min{font-size:11px;color:var(--faint);font-weight:400;}
@@ -69,56 +70,69 @@ td:nth-child(7),th:nth-child(7){width:80px;}
   thead{display:none;}
   tr{
     background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);
-    margin-bottom:8px;padding:10px 12px;
+    margin-bottom:8px;padding:8px 10px;
     display:grid;
-    grid-template-columns:70px 1fr 76px;
+    grid-template-columns:65px 1fr 76px;
     grid-template-rows:auto auto auto;
-    gap:6px 0;position:relative;
+    gap:5px 0;
   }
   tr.in-cart{background:#f4fbf6;}
   td{padding:0;border:none;display:flex;align-items:center;}
+
+  /* td1: Código — oculto */
   td:nth-child(1){display:none;}
+
+  /* td2: Nome — Q4: linha 1, col central */
   td:nth-child(2){
-    grid-column:1/3;grid-row:1;
+    grid-column:2;grid-row:1;
     flex-direction:column;align-items:center;justify-content:center;
-    text-align:center;font-size:11px;font-weight:600;
-    position:relative;
-  }
-  td:nth-child(2) .info-btn{
-    position:absolute;left:0;top:50%;transform:translateY(-50%);
-  }
-  td:nth-child(2) .nome-cell{
+    text-align:center;font-size:12px;font-weight:600;
     word-break:break-word;
-    max-width:100%;
   }
+
+  /* td3: + infos — Q1: linha 1, col esquerda */
   td:nth-child(3){
-    grid-column:1;grid-row:2;
-    flex-direction:column;align-items:center;justify-content:center;
-    font-size:11px;color:var(--muted);
+    grid-column:1;grid-row:1;
+    justify-content:center;align-items:center;
   }
-  td:nth-child(3)::before{content:"kg";font-size:10px;color:var(--faint);}
+
+  /* td4: kg — Q2: linha 2, col esquerda */
   td:nth-child(4){
-    grid-column:1;grid-row:3;
-    flex-direction:column;align-items:center;justify-content:center;
-    font-size:11px;color:var(--muted);
+    grid-column:1;grid-row:2;
+    flex-direction:column;align-items:flex-start;justify-content:center;
+    padding-left:6px;font-size:11px;color:var(--muted);
   }
-  td:nth-child(4)::before{content:"100g";font-size:10px;color:var(--faint);}
+  td:nth-child(4)::before{content:"kg";font-size:10px;color:var(--faint);}
+
+  /* td5: 100g — Q3: linha 3, col esquerda */
   td:nth-child(5){
+    grid-column:1;grid-row:3;
+    flex-direction:column;align-items:flex-start;justify-content:center;
+    padding-left:6px;font-size:11px;color:var(--muted);
+  }
+  td:nth-child(5)::before{content:"100g";font-size:10px;color:var(--faint);}
+
+  /* td6: Quantidade — Q5: linha 2, col central */
+  td:nth-child(6){
     grid-column:2;grid-row:2;
     justify-content:center;align-items:center;
   }
-  td:nth-child(5) .qty-btn{width:26px!important;height:26px!important;font-size:17px!important;}
-  td:nth-child(5) .qty-val{width:34px!important;font-size:11px!important;text-align:center;}
-  td:nth-child(6){
+  td:nth-child(6) .qty-btn{width:26px!important;height:26px!important;font-size:17px!important;}
+  td:nth-child(6) .qty-val{width:34px!important;font-size:11px!important;text-align:center;}
+
+  /* td7: Total — Q6: linha 3, col central */
+  td:nth-child(7){
     grid-column:2;grid-row:3;
     justify-content:center;align-items:center;
     font-size:13px;font-weight:600;color:var(--accent);
   }
-  td:nth-child(7){
+
+  /* td8: Carrinho — Q7-Q9: todas as linhas, col direita — NÃO MEXER */
+  td:nth-child(8){
     grid-column:3;grid-row:1/4;
     justify-content:flex-end;align-items:center;
   }
-  td:nth-child(7) button{
+  td:nth-child(8) button{
     display:flex!important;flex-direction:column!important;
     align-items:center!important;justify-content:center!important;
     width:68px!important;height:76px!important;padding:6px!important;
@@ -129,17 +143,6 @@ td:nth-child(7),th:nth-child(7){width:80px;}
   }
 }
 
-
-/* Cart */
-.cart-empty{text-align:center;color:var(--muted);padding:3rem 0;font-size:14px;}
-.cart-empty-icon{font-size:32px;display:block;margin-bottom:8px;}
-.cart-item{display:flex;align-items:center;padding:10px 0;border-bottom:1px solid #F0EDE9;gap:10px;}
-.cart-item:last-of-type{border-bottom:none;}
-.cart-item-name{flex:1;font-size:14px;font-weight:500;}
-.cart-item-sub{font-size:12px;color:var(--muted);font-family:var(--mono);}
-.cart-item-price{font-family:var(--mono);font-weight:500;font-size:14px;white-space:nowrap;}
-.cart-remove{cursor:pointer;color:var(--faint);background:none;border:none;font-size:16px;flex-shrink:0;}
-.cart-remove:hover{color:var(--danger);}
 .cart-box{border:1px solid var(--border);border-radius:var(--radius);background:var(--surface);padding:16px;}
 .cart-total-row{display:flex;justify-content:space-between;margin-top:14px;padding-top:14px;border-top:1.5px solid var(--border);font-weight:600;font-size:16px;}
 .cart-total-val{font-family:var(--mono);color:var(--accent);}
@@ -287,7 +290,7 @@ td:nth-child(7),th:nth-child(7){width:80px;}
     <div class="table-wrap">
       <table>
         <thead>
-          <tr><th>Cód.</th><th>Produto</th><th>R$/kg</th><th>R$/100g</th><th>Quantidade</th><th>Total</th><th></th></tr>
+          <tr><th>Cód.</th><th>Produto</th><th></th><th>R$/kg</th><th>R$/100g</th><th>Quantidade</th><th>Total</th><th></th></tr>
         </thead>
         <tbody id="tbody"></tbody>
       </table>
@@ -449,10 +452,10 @@ function renderTable(){
     var inCartBadge=qtdCarrinho>0?`<br><span class="in-cart-badge">✓ ${qtdCarrinho>=1000?(qtdCarrinho/1000).toFixed(1)+"kg":qtdCarrinho+"g"}</span>`:"";
     return`<tr class="${inCartClass}">
       <td><span class="cod">${p.cod}</span></td>
-      <td><div class="nome-cell">${p.nome}<br><span class="nome-min">mín. ${minPara(p)}g</span>${inCartBadge}${p.descricao?' <button class="info-btn" onclick="abrirInfo(\''+p.cod+'\')">+ infos</button>':''}</div></td>
-
-      <td><span class="preco">${fmtPrice(p.kg)}</span></td>
-      <td><span class="preco">${fmtPrice(p.g100)}</span></td>
+      <td><div class="nome-cell">${p.nome}<br><span class="nome-min">mín. ${minPara(p)}g</span>${inCartBadge}</div></td>
+      <td class="td-infos">${p.descricao?'<button class="info-btn" onclick="abrirInfo(\''+p.cod+'\')">+ infos</button>':''}</td>
+      <td class="td-kg"><span class="preco">${fmtPrice(p.kg)}</span></td>
+      <td class="td-100g"><span class="preco">${fmtPrice(p.g100)}</span></td>
       <td><div class="qty-ctrl">
         <button class="qty-btn" onclick="changeQty('${p.cod}',-1)">−</button>
         <span class="qty-val" id="qval-${uid}">${qty>0?qty+"g":"—"}</span>
