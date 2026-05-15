@@ -37,12 +37,13 @@ tr:last-child td{border-bottom:none;}
 tr:hover td{background:#FAFAF9;}
 tr:focus-within{outline:none;box-shadow:none;}
 td:nth-child(1),th:nth-child(1){width:36px;}
-td:nth-child(2),th:nth-child(2){min-width:100px;}
+td:nth-child(2),th:nth-child(2){min-width:90px;}
 td:nth-child(3),th:nth-child(3){width:58px;}
 td:nth-child(4),th:nth-child(4){width:58px;}
-td:nth-child(5),th:nth-child(5){width:100px;}
-td:nth-child(6),th:nth-child(6){width:68px;}
-td:nth-child(7),th:nth-child(7){width:80px;}
+td:nth-child(5),th:nth-child(5){width:58px;}
+td:nth-child(6),th:nth-child(6){width:100px;}
+td:nth-child(7),th:nth-child(7){width:68px;}
+td:nth-child(8),th:nth-child(8){width:80px;}
 .cod{font-family:var(--mono);font-size:10px;color:var(--faint);}
 .nome-cell{font-size:12px;font-weight:500;line-height:1.3;}
 .nome-min{font-size:11px;color:var(--faint);font-weight:400;}
@@ -64,42 +65,78 @@ td:nth-child(7),th:nth-child(7){width:80px;}
   thead{display:none;}
   tr{
     background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);
-    margin-bottom:8px;padding:10px 92px 10px 12px;
-    display:grid;grid-template-columns:1fr 1fr;grid-template-rows:auto auto auto;
-    gap:8px 0;position:relative;overflow:hidden;min-height:88px;
+    margin-bottom:8px;padding:10px 12px;
+    display:grid;
+    grid-template-columns:70px 1fr 76px;
+    grid-template-rows:auto auto auto;
+    gap:6px 0;position:relative;
   }
   tr.in-cart{background:#f4fbf6;}
   td{padding:0;border:none;display:flex;align-items:center;}
+
+  /* Código: oculto */
   td:nth-child(1){display:none;}
+
+  /* Nome: linha 1, col central */
   td:nth-child(2){
-    grid-column:1/3;grid-row:1;
+    grid-column:2;grid-row:1;
     flex-direction:column;align-items:center;justify-content:center;
     text-align:center;font-size:13px;font-weight:600;
-    padding-left:55px;
-  }
-  td:nth-child(3){
-    position:absolute;left:12px;top:calc(50% - 34px);
-    flex-direction:column;align-items:flex-start;font-size:11px;color:var(--muted);
-  }
-  td:nth-child(3)::before{content:"kg";font-size:10px;color:var(--faint);}
-  td:nth-child(4){
-    position:absolute;left:12px;top:calc(50% + 4px);
-    flex-direction:column;align-items:flex-start;font-size:11px;color:var(--muted);
-  }
-  td:nth-child(4)::before{content:"100g";font-size:10px;color:var(--faint);}
-  td:nth-child(5){grid-column:2;grid-row:2;justify-content:center;align-items:center;margin-left:-20px;}
-  td:nth-child(5) .qty-btn{width:26px!important;height:26px!important;font-size:17px!important;}
-  td:nth-child(5) .qty-val{width:34px!important;font-size:11px!important;text-align:center;}
-  td:nth-child(6){grid-column:2;grid-row:3;justify-content:center;align-items:center;font-size:13px;font-weight:600;color:var(--accent);margin-left:-3px;}
-  td:nth-child(7){position:absolute;right:20px;top:50%;transform:translateY(-50%);display:flex;align-items:center;justify-content:center;}
-  td:nth-child(7) button{
-    display:flex!important;flex-direction:column!important;align-items:center!important;justify-content:center!important;
-    width:76px!important;height:68px!important;padding:6px!important;
-    font-size:11px!important;font-weight:600!important;line-height:1.4!important;
-    background:var(--accent-light)!important;border-color:var(--accent)!important;color:var(--accent)!important;
-    white-space:normal!important;text-align:center!important;border-radius:8px!important;
   }
 
+  /* + infos (coluna de infos): linha 1, col esquerda */
+  td:nth-child(3){
+    grid-column:1;grid-row:1;
+    align-items:center;justify-content:center;
+    font-size:11px;color:var(--muted);
+  }
+  td:nth-child(3)::before{content:none!important;}
+
+  /* Preço kg: linha 2, col esquerda */
+  td:nth-child(4){
+    grid-column:1;grid-row:2;
+    flex-direction:column;align-items:center;justify-content:center;
+    font-size:11px;color:var(--muted);
+  }
+  td:nth-child(4)::before{content:"kg";font-size:10px;color:var(--faint);}
+
+  /* Preço 100g: linha 3, col esquerda */
+  td:nth-child(5){
+    grid-column:1;grid-row:3;
+    flex-direction:column;align-items:center;justify-content:center;
+    font-size:11px;color:var(--muted);
+  }
+  td:nth-child(5)::before{content:"100g";font-size:10px;color:var(--faint);}
+
+  /* Quantidade: linha 2, col central */
+  td:nth-child(6){
+    grid-column:2;grid-row:2;
+    justify-content:center;align-items:center;
+  }
+  td:nth-child(6) .qty-btn{width:26px!important;height:26px!important;font-size:17px!important;}
+  td:nth-child(6) .qty-val{width:34px!important;font-size:11px!important;text-align:center;}
+
+  /* Total: linha 3, col central */
+  td:nth-child(7){
+    grid-column:2;grid-row:3;
+    justify-content:center;align-items:center;
+    font-size:13px;font-weight:600;color:var(--accent);
+  }
+
+  /* Botão carrinho: todas as linhas, col direita */
+  td:nth-child(8){
+    grid-column:3;grid-row:1/4;
+    justify-content:flex-end;align-items:center;
+  }
+  td:nth-child(8) button{
+    display:flex!important;flex-direction:column!important;
+    align-items:center!important;justify-content:center!important;
+    width:68px!important;height:76px!important;padding:6px!important;
+    font-size:11px!important;font-weight:600!important;line-height:1.4!important;
+    background:var(--accent-light)!important;border-color:var(--accent)!important;
+    color:var(--accent)!important;white-space:normal!important;
+    text-align:center!important;border-radius:8px!important;
+  }
 }
 
 /* Cart */
@@ -176,6 +213,25 @@ td:nth-child(7),th:nth-child(7){width:80px;}
 .sucesso-titulo{font-size:18px;font-weight:600;color:var(--accent);margin-bottom:10px;}
 .sucesso-msg{font-size:14px;color:var(--muted);line-height:1.7;}
 .sucesso-fechar{margin-top:20px;padding:10px 28px;border:none;border-radius:var(--radius);background:var(--accent);color:#fff;font-size:14px;font-weight:600;font-family:var(--font);cursor:pointer;}
+/* Pop-up de informações do produto */
+.info-overlay{display:none;position:fixed;inset:0;z-index:3000;background:rgba(0,0,0,.5);align-items:flex-end;justify-content:center;}
+.info-overlay.aberto{display:flex;}
+@media(min-width:601px){.info-overlay{align-items:center;}}
+.info-box{background:#fff;border-radius:16px 16px 0 0;width:100%;max-width:520px;max-height:85vh;overflow-y:auto;padding:20px;animation:slideUp .3s ease;}
+@media(min-width:601px){.info-box{border-radius:16px;max-height:80vh;}}
+@keyframes slideUp{from{transform:translateY(100%)}to{transform:translateY(0)}}
+.info-fechar{float:right;background:none;border:none;font-size:22px;cursor:pointer;color:var(--muted);line-height:1;}
+.info-nome{font-size:17px;font-weight:600;margin-bottom:16px;padding-right:30px;}
+.info-secao{margin-bottom:20px;}
+.info-secao-titulo{font-size:12px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;margin-bottom:10px;padding-bottom:6px;border-bottom:1px solid var(--border);}
+.info-fotos{display:flex;gap:8px;overflow-x:auto;}
+.info-foto{width:120px;height:120px;object-fit:cover;border-radius:8px;flex-shrink:0;}
+.info-descricao{font-size:14px;color:var(--muted);line-height:1.6;}
+.info-tabela{width:100%;border-collapse:collapse;font-size:13px;}
+.info-tabela tr:nth-child(even){background:#F7F5F2;}
+.info-tabela td{padding:6px 10px;border-bottom:1px solid #F0EDE9;}
+.info-tabela td:last-child{text-align:right;font-family:var(--mono);}
+.info-btn{font-size:10px;font-weight:600;color:var(--accent);background:var(--accent-light);border:1px solid var(--accent);border-radius:10px;padding:2px 6px;cursor:pointer;white-space:nowrap;flex-shrink:0;}
 /* Botão WhatsApp flutuante */
 .wpp-atendimento{
   display:inline-flex;
@@ -240,7 +296,7 @@ td:nth-child(7),th:nth-child(7){width:80px;}
     <div class="table-wrap">
       <table>
         <thead>
-          <tr><th>Cód.</th><th>Produto</th><th>R$/kg</th><th>R$/100g</th><th>Quantidade</th><th>Total</th><th></th></tr>
+          <tr><th>Cód.</th><th>Produto</th><th></th><th>R$/kg</th><th>R$/100g</th><th>Quantidade</th><th>Total</th><th></th></tr>
         </thead>
         <tbody id="tbody"></tbody>
       </table>
@@ -310,13 +366,34 @@ td:nth-child(7),th:nth-child(7){width:80px;}
 var API_URL="https://imbur-pedidos.contatoimbur.workers.dev";
 
 var produtos=[
-  {cod:"221",nome:"Semente de Abóbora",kg:69.90,g100:6.99,cat:"Sementes"},
-  {cod:"219",nome:"Semente de Girassol",kg:29.90,g100:2.99,cat:"Sementes"},
-  {cod:"301",nome:"Castanha de Caju",kg:89.90,g100:8.99,cat:"Castanhas"},
-  {cod:"302",nome:"Amendoim Torrado",kg:19.90,g100:1.99,cat:"Castanhas"},
-  {cod:"401",nome:"Alho em Pó",kg:38.90,g100:3.89,cat:"Temperos"},
-  {cod:"402",nome:"Páprica Defumada",kg:44.90,g100:4.49,cat:"Temperos"},
-  {cod:"501",nome:"Aveia em Flocos",kg:12.90,g100:1.29,cat:"Cereais"},
+  {cod:"221",nome:"Semente de Abóbora",kg:69.90,g100:6.99,cat:"Sementes",
+    fotos:["https://images.unsplash.com/photo-1604147706283-d7119b5b822c?w=400&fit=crop"],
+    descricao:"Semente de abóbora crua, rica em zinco, magnésio e gorduras saudáveis. Ótima para consumo direto, saladas e granolas.",
+    nutricional:[["Porção","100g"],["Calorias","559 kcal"],["Proteínas","30g"],["Carboidratos","11g"],["Gorduras","49g"],["Fibras","6g"],["Zinco","7,8mg"]]},
+  {cod:"219",nome:"Semente de Girassol",kg:29.90,g100:2.99,cat:"Sementes",
+    fotos:["https://images.unsplash.com/photo-1548012607-8cc0c91b14e6?w=400&fit=crop"],
+    descricao:"Semente de girassol torrada e sem casca. Rica em vitamina E, selênio e ácidos graxos essenciais.",
+    nutricional:[["Porção","100g"],["Calorias","584 kcal"],["Proteínas","21g"],["Carboidratos","20g"],["Gorduras","51g"],["Fibras","9g"],["Vitamina E","35mg"]]},
+  {cod:"301",nome:"Castanha de Caju",kg:89.90,g100:8.99,cat:"Castanhas",
+    fotos:["https://images.unsplash.com/photo-1536304993881-ff6e9eefa2a6?w=400&fit=crop"],
+    descricao:"Castanha de caju torrada e salgada, rica em ferro, cobre e gorduras monoinsaturadas. Fonte natural de energia.",
+    nutricional:[["Porção","100g"],["Calorias","553 kcal"],["Proteínas","18g"],["Carboidratos","30g"],["Gorduras","44g"],["Fibras","3g"],["Ferro","6,7mg"]]},
+  {cod:"302",nome:"Amendoim Torrado",kg:19.90,g100:1.99,cat:"Castanhas",
+    fotos:["https://images.unsplash.com/photo-1574323347407-f5e1ad6d020b?w=400&fit=crop"],
+    descricao:"Amendoim torrado e salgado, excelente fonte de proteínas e gorduras saudáveis. Perfeito para snacks.",
+    nutricional:[["Porção","100g"],["Calorias","567 kcal"],["Proteínas","26g"],["Carboidratos","16g"],["Gorduras","49g"],["Fibras","9g"],["Resveratrol","Presente"]]},
+  {cod:"401",nome:"Alho em Pó",kg:38.90,g100:3.89,cat:"Temperos",
+    fotos:["https://images.unsplash.com/photo-1615485500704-8e990f9900f7?w=400&fit=crop"],
+    descricao:"Alho desidratado e triturado, concentrado de sabor. Ideal para temperar carnes, molhos e marinadas.",
+    nutricional:[["Porção","5g"],["Calorias","17 kcal"],["Proteínas","0,9g"],["Carboidratos","3,8g"],["Gorduras","0g"],["Fibras","0,3g"],["Alicina","Presente"]]},
+  {cod:"402",nome:"Páprica Defumada",kg:44.90,g100:4.49,cat:"Temperos",
+    fotos:["https://images.unsplash.com/photo-1596040033229-a9821ebd058d?w=400&fit=crop"],
+    descricao:"Páprica defumada de origem espanhola, com aroma intenso e sabor levemente picante. Perfeita para carnes e vegetais.",
+    nutricional:[["Porção","5g"],["Calorias","16 kcal"],["Proteínas","0,8g"],["Carboidratos","3,1g"],["Gorduras","0,7g"],["Fibras","2g"],["Vitamina A","Presente"]]},
+  {cod:"501",nome:"Aveia em Flocos",kg:12.90,g100:1.29,cat:"Cereais",
+    fotos:["https://images.unsplash.com/photo-1517093728735-d99d883f45c7?w=400&fit=crop"],
+    descricao:"Aveia em flocos finos, rica em betaglucana que auxilia na redução do colesterol. Versátil para mingaus, bolos e vitaminas.",
+    nutricional:[["Porção","100g"],["Calorias","394 kcal"],["Proteínas","14g"],["Carboidratos","66g"],["Gorduras","7g"],["Fibras","10g"],["Betaglucana","4g"]]},
 ];
 
 var MIN_GERAL=100,MIN_TEMPERO=50,STEP=50;
@@ -335,6 +412,24 @@ function renderCats(){
   ).join("");
 }
 function selectCat(c){activeCat=c;renderCats();renderTable();}
+
+function abrirInfo(cod){
+  var p=produtos.find(x=>x.cod===cod);
+  if(!p)return;
+  document.getElementById("info-nome").textContent=p.nome;
+  document.getElementById("info-fotos").innerHTML=(p.fotos||[]).map(f=>`<img class="info-foto" src="${f}" alt="${p.nome}">`).join("")||"<span style='color:var(--muted);font-size:13px'>Sem fotos disponíveis</span>";
+  document.getElementById("info-descricao").textContent=p.descricao||"Sem descrição disponível.";
+  document.getElementById("info-tabela").innerHTML=(p.nutricional||[]).map(r=>`<tr><td>${r[0]}</td><td>${r[1]}</td></tr>`).join("")||"<tr><td colspan='2' style='color:var(--muted)'>Sem informações nutricionais</td></tr>";
+  document.getElementById("info-overlay").classList.add("aberto");
+}
+
+function fecharInfo(e){
+  if(!e||e.target===document.getElementById("info-overlay")||e.target.classList.contains("info-fechar")){
+    document.getElementById("info-overlay").classList.remove("aberto");
+  }
+}
+
+renderCats();renderTable();
 
 function filtered(){
   var q=document.getElementById("search").value.toLowerCase();
@@ -364,6 +459,7 @@ function renderTable(){
     return`<tr class="${inCartClass}">
       <td><span class="cod">${p.cod}</span></td>
       <td><div class="nome-cell">${p.nome}<br><span class="nome-min">mín. ${minPara(p)}g</span>${inCartBadge}</div></td>
+      <td style="text-align:center;">${p.descricao?'<button class="info-btn" onclick="abrirInfo(\''+p.cod+'\')">+ infos</button>':''}</td>
       <td><span class="preco">${fmtPrice(p.kg)}</span></td>
       <td><span class="preco">${fmtPrice(p.g100)}</span></td>
       <td><div class="qty-ctrl">
@@ -693,5 +789,24 @@ function showTab(tab){
 
 renderCats();renderTable();
 </script>
+<!-- Pop-up info produto -->
+<div class="info-overlay" id="info-overlay" onclick="fecharInfo(event)">
+  <div class="info-box" id="info-box">
+    <button class="info-fechar" onclick="fecharInfo()">✕</button>
+    <div class="info-nome" id="info-nome"></div>
+    <div class="info-secao">
+      <div class="info-secao-titulo">📷 Fotos</div>
+      <div class="info-fotos" id="info-fotos"></div>
+    </div>
+    <div class="info-secao">
+      <div class="info-secao-titulo">📝 Descrição</div>
+      <div class="info-descricao" id="info-descricao"></div>
+    </div>
+    <div class="info-secao">
+      <div class="info-secao-titulo">🥗 Tabela Nutricional</div>
+      <table class="info-tabela" id="info-tabela"></table>
+    </div>
+  </div>
+</div>
 </body>
 </html>
