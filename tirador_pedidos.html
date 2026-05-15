@@ -20,8 +20,9 @@ body{background:var(--bg);color:var(--text);font-family:var(--font);min-height:1
 .tabs{display:flex;border-bottom:1.5px solid var(--border);margin-bottom:24px;}
 .tab{padding:10px 20px;font-size:14px;font-weight:500;cursor:pointer;border:none;border-bottom:2px solid transparent;color:var(--muted);background:none;font-family:var(--font);margin-bottom:-1.5px;transition:color .15s;}
 @media(max-width:600px){
-  .tab{padding:8px 10px;font-size:12px;}
-  .wpp-atendimento{font-size:11px;padding:4px 8px;}
+  .tab{padding:6px 8px;font-size:11px;}
+  .wpp-atendimento{font-size:10px;padding:3px 6px;gap:3px;}
+  .wpp-atendimento svg{width:12px;height:12px;}
 }
 .tab.active{color:var(--accent);border-bottom-color:var(--accent);}
 .badge{display:inline-flex;align-items:center;justify-content:center;min-width:18px;height:18px;background:var(--danger);color:#fff;border-radius:9px;font-size:10px;font-weight:600;margin-left:5px;padding:0 4px;}
@@ -41,7 +42,7 @@ tr:last-child td{border-bottom:none;}
 tr:hover td{background:#FAFAF9;}
 tr:focus-within{outline:none;box-shadow:none;}
 td:nth-child(1),th:nth-child(1){width:36px;}
-td:nth-child(2),th:nth-child(2){min-width:70px;}
+td:nth-child(2),th:nth-child(2){width:90px;}
 td:nth-child(3),th:nth-child(3){width:58px;}
 td:nth-child(4),th:nth-child(4){width:58px;}
 td:nth-child(5),th:nth-child(5){width:100px;}
