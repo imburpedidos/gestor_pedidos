@@ -941,10 +941,10 @@ function abrirConfirmacao(){
   var txt=gerarTextoWpp();
   document.getElementById("wpp-texto").value=txt;
   document.getElementById("confirmacao-resumo").textContent=txt;
-  // Configurar botão WhatsApp
+  // Configurar botão WhatsApp — salva na planilha E abre WhatsApp com mensagem
   document.getElementById("confirmacao-wpp-btn").onclick=function(){
-    enviarPedido();
-    document.getElementById("confirmacao-overlay").style.display="none";
+    var msg=document.getElementById("wpp-texto").value;
+    enviarPedido(msg);
   };
   document.getElementById("confirmacao-overlay").style.display="flex";
 }
@@ -1114,7 +1114,7 @@ function abrirWhatsapp(){
   window.open("https://wa.me/5548991446378?text="+encodeURIComponent(txt),"_blank","noopener");
 }
 
-async function enviarPedido(){
+async function enviarPedido(txtPreSalvo){
   if(!cliente){
     alert("Por favor, faça sua identificação antes de enviar o pedido.");
     document.getElementById("id-overlay").classList.add("aberto");
@@ -1123,7 +1123,7 @@ async function enviarPedido(){
   if(!validarEndereco())return;
   if(!validarAgenda())return;
 
-  var txt=gerarTextoWpp();
+  var txt=txtPreSalvo||gerarTextoWpp();
   document.getElementById("wpp-texto").value=txt;
   if(!txt)return;
 
@@ -1198,6 +1198,7 @@ async function enviarPedido(){
   }
 
   // Abrir pop-up de sucesso com botão WhatsApp
+  window.open("https://wa.me/5548991446378?text="+encodeURIComponent(txt),"_blank","noopener");
   lancarConfetti();
   document.getElementById("sucesso-overlay").classList.add("ativo");
 }
