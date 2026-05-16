@@ -488,7 +488,7 @@ td:nth-child(8),th:nth-child(8){width:80px;}
     <div class="sucesso-titulo">⚠️ Importante!</div>
     <div class="sucesso-msg">Pedido recebido!<br><br>Ainda é necessário confirmar método de pagamento e entrega/retirada no WhatsApp.</div>
     <div id="sucesso-agendamento" style="display:none;margin-top:12px;padding:10px 14px;background:var(--accent-light);border-radius:var(--radius);font-size:13px;color:var(--accent);font-weight:600;"></div>
-    <button onclick="fecharSucesso();window.open('https://wa.me/5548991446378?text='+encodeURIComponent(document.getElementById('wpp-texto').value),'_blank','noopener')" style="margin-top:16px;width:100%;padding:12px;border:none;border-radius:var(--radius);background:#25D366;color:#fff;font-size:15px;font-weight:600;font-family:var(--font);cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;">
+    <button onclick="enviarWhatsappFinal()" style="margin-top:16px;width:100%;padding:12px;border:none;border-radius:var(--radius);background:#25D366;color:#fff;font-size:15px;font-weight:600;font-family:var(--font);cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" style="width:18px;height:18px;fill:#fff;"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
       Enviar pelo WhatsApp
     </button>
@@ -893,8 +893,9 @@ function abrirConfirmacao(){
 
 function atualizarWpp(){
   var wppTexto=document.getElementById("wpp-texto");
-  if(wppTexto&&cart.length&&tipoEntrega){
-    wppTexto.value=gerarTextoWpp();
+  if(wppTexto&&cart.length){
+    var txt=gerarTextoWpp();
+    if(txt) wppTexto.value=txt;
   }
 }
 
@@ -1054,11 +1055,11 @@ function gerarTextoWpp(){
   var totalFinal=subtotal+frete.valor;
 
   var msg="";
-  msg+="🛒 *Pedido "+numStr+" — "+dataHoje+"*";
+  msg+="*Pedido "+numStr+" — "+dataHoje+"*";
 
-  msg+="\n\n👤 *"+(c.nome||"Cliente")+"*";
-  if(c.telefone) msg+="\n📞 "+c.telefone;
-  if(c.email)    msg+="\n📧 "+c.email;
+  msg+="\n\n*"+(c.nome||"Cliente")+"*";
+  if(c.telefone) msg+="\n"+c.telefone;
+  if(c.email)    msg+="\n"+c.email;
 
   if(tipoEntrega==="entrega"){
     var cep   =document.getElementById("end-cep").value;
@@ -1068,23 +1069,23 @@ function gerarTextoWpp(){
     var cidade=document.getElementById("end-cidade").value;
     var comp  =document.getElementById("end-complemento").value;
     var ref   =document.getElementById("end-referencia").value;
-    msg+="\n\n🚚 *Entrega*";
-    msg+="\n📍 "+rua+", "+num;
+    msg+="\n\n*Entrega*";
+    msg+="\n"+rua+", "+num;
     if(comp) msg+=" — "+comp;
     msg+="\n    "+bairro+", "+cidade;
     msg+="\n    CEP: "+cep;
     if(ref) msg+="\n    Ref: "+ref;
   }else if(tipoEntrega==="retirada"){
-    msg+="\n\n🏪 *Retirada*";
-    msg+="\n📍 Rua Felipe Schmidt, 554, loja 1 — Centro, Florianópolis - SC";
-    msg+="\n🗺️ Como chegar: https://share.google/s0tnL9xYXA5mggPDs";
+    msg+="\n\n*Retirada*";
+    msg+="\nRua Felipe Schmidt, 554, loja 1 — Centro, Florianópolis - SC";
+    msg+="\nComo chegar: https://share.google/s0tnL9xYXA5mggPDs";
     if(agendaData&&agendaHora){
       var diasSemana=["Domingo","Segunda","Terça","Quarta","Quinta","Sexta","Sábado"];
       var meses=["Janeiro","Fevereiro","Março","Abril","Maio","Junho","Julho","Agosto","Setembro","Outubro","Novembro","Dezembro"];
-      msg+="\n📅 "+diasSemana[agendaData.getDay()]+", "+agendaData.getDate()+" de "+meses[agendaData.getMonth()];
-      msg+="\n⏰ Horário: "+agendaHora;
+      msg+="\n"+diasSemana[agendaData.getDay()]+", "+agendaData.getDate()+" de "+meses[agendaData.getMonth()];
+      msg+="\nHorário: "+agendaHora;
       var nomeRet=document.getElementById("agenda-retirada-nome").value.trim();
-      if(nomeRet) msg+="\n👤 Retira: "+nomeRet;
+      if(nomeRet) msg+="\nRetira: "+nomeRet;
     }
   }
 
@@ -1200,6 +1201,7 @@ async function enviarPedido(txtPreSalvo){
   // Abrir pop-up de sucesso com botão WhatsApp
   // Atualizar campo oculto com a mensagem final
   document.getElementById("wpp-texto").value=txt;
+  window._msgFinalPedido=txt;
   lancarConfetti();
   document.getElementById("sucesso-overlay").classList.add("ativo");
 }
@@ -1215,7 +1217,7 @@ function renderCart(){
     el.innerHTML='<div class="cart-empty" style="text-align:center;"><span class="cart-empty-icon">🛒</span>Carrinho vazio</div>';
     summary.style.display="none";
     wppSection.style.display="none";
-    wppTexto.value="";
+    // wppTexto.value="" -- não limpar, manter mensagem
     tipoEntrega=null;
     document.getElementById("btn-entrega").classList.remove("ativo");
     document.getElementById("btn-retirada").classList.remove("ativo");
@@ -1432,6 +1434,12 @@ function lancarConfetti(){
     wrap.appendChild(p);
   }
   setTimeout(()=>wrap.style.display="none",3000);
+}
+
+function enviarWhatsappFinal(){
+  var msg=gerarTextoWpp();
+  fecharSucesso();
+  if(msg) window.open("https://wa.me/5548991446378?text="+encodeURIComponent(msg),"_blank","noopener");
 }
 
 function fecharSucesso(){
