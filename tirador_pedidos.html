@@ -153,6 +153,7 @@ td:nth-child(8),th:nth-child(8){width:80px;}
 .entrega-btn{flex:1;padding:10px;border:1.5px solid var(--border);border-radius:var(--radius);background:var(--surface);font-size:14px;font-weight:600;font-family:var(--font);cursor:pointer;color:var(--muted);transition:all .15s;}
 .entrega-btn.ativo{border-color:var(--accent);background:var(--accent-light);color:var(--accent);}
 .aviso-minimo{margin-top:10px;padding:10px 14px;border-radius:var(--radius);background:#FFF0E0;color:#C05C00;font-size:13px;font-weight:500;display:none;}
+.aviso-minimo.info{background:var(--accent-light);color:var(--accent);}
 .enviar-btn{margin-top:14px;width:100%;padding:12px;border:none;border-radius:var(--radius);background:var(--accent);color:#fff;font-size:15px;font-weight:600;font-family:var(--font);cursor:pointer;transition:background .15s;display:none;}
 .enviar-btn:hover{background:#235a40;}
 
@@ -288,6 +289,7 @@ td:nth-child(8),th:nth-child(8){width:80px;}
     <div>
       <h1><img src="data:image/png;base64,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" style="height:32px;width:auto;vertical-align:middle;margin-right:8px;margin-bottom:14px;mix-blend-mode:multiply;">Pedidos Imbur</h1>
       <p>Escolha a quantidade dos produtos, envie para o carrinho e mande para o nosso WhatsApp</p>
+      <p style="font-size:12px;color:var(--danger);font-weight:500;margin-top:4px;">🚚 Pedidos para entrega somente para a região da grande Florianópolis</p>
     </div>
     <div style="margin-top:4px;">
       <button class="entrar-btn" id="entrar-btn" onclick="abrirLogin()" style="display:none">Entrar</button>
@@ -399,6 +401,23 @@ td:nth-child(8),th:nth-child(8){width:80px;}
         <button class="enviar-btn" id="enviar-btn" onclick="enviarPedido()">✅ Enviar pedido por WhatsApp</button>
       </div>
     </div>
+
+    <!-- Resumo de valores -->
+    <div id="resumo-valores" style="display:none;margin-top:14px;border:1px solid var(--border);border-radius:var(--radius);background:var(--surface);overflow:hidden;">
+      <div style="padding:14px;border-bottom:1px solid var(--border);">
+        <div style="font-size:13px;font-weight:600;color:var(--text);margin-bottom:12px;">Resumo de valores</div>
+        <div style="display:flex;justify-content:space-between;font-size:13px;color:var(--muted);margin-bottom:8px;">
+          <span>Subtotal</span><span id="resumo-subtotal" style="font-family:var(--mono)"></span>
+        </div>
+        <div id="resumo-frete-row" style="display:none;justify-content:space-between;font-size:13px;color:var(--muted);margin-bottom:8px;">
+          <span>Taxa de entrega</span><span id="resumo-frete" style="font-family:var(--mono);color:var(--accent);font-weight:600;"></span>
+        </div>
+        <div style="display:flex;justify-content:space-between;font-size:15px;font-weight:700;color:var(--text);padding-top:10px;border-top:1.5px solid var(--border);margin-top:4px;">
+          <span>Total</span><span id="resumo-total" style="font-family:var(--mono);color:var(--accent);"></span>
+        </div>
+      </div>
+    </div>
+
     <div class="wpp-section" id="wpp-section" style="display:none">
       <div class="wpp-label">💬 Mensagem para WhatsApp</div>
       <textarea class="wpp-textarea" id="wpp-texto"></textarea>
@@ -437,7 +456,6 @@ td:nth-child(8),th:nth-child(8){width:80px;}
     <div class="sucesso-emoji">🎉</div>
     <div class="sucesso-titulo">⚠️ Importante!</div>
     <div class="sucesso-msg">Pedido recebido!<br><br>Ainda é necessário confirmar método de pagamento e entrega/retirada no WhatsApp.</div>
-    <div id="sucesso-agendamento" style="display:none;margin-top:12px;padding:10px 14px;background:var(--accent-light);border-radius:var(--radius);font-size:13px;color:var(--accent);font-weight:600;"></div>
     <button class="sucesso-fechar" onclick="fecharSucesso()">Fechar</button>
   </div>
 </div>
@@ -603,18 +621,28 @@ function selecionarEntrega(tipo){
   var enviar=document.getElementById("enviar-btn");
   var endForm=document.getElementById("endereco-form");
   var agendaForm=document.getElementById("agenda-form");
-  if(tipo==="entrega"&&total<50){
-    aviso.style.display="block";enviar.style.display="none";
-    endForm.classList.remove("visivel");
-    agendaForm.classList.remove("visivel");
-  }else if(tipo==="entrega"){
-    aviso.style.display="none";enviar.style.display="block";
+  // Atualizar resumo ao trocar tipo de entrega
+  if(cart.length)renderCart();
+  var avisoEl=aviso;
+  if(tipo==="entrega"){
     endForm.classList.add("visivel");
     agendaForm.classList.remove("visivel");
+    if(total<50){
+      avisoEl.innerHTML="⚠️ Pedido mínimo de R$ 50,00 para entrega. Adicione mais produtos ou escolha Retirada.";
+      avisoEl.style.display="block";enviar.style.display="none";
+    }else{
+      avisoEl.style.display="none";
+      enviar.style.display="block";
+    }
   }else{
-    aviso.style.display="none";enviar.style.display="block";
     endForm.classList.remove("visivel");
     agendaForm.classList.add("visivel");
+    if(total<30){
+      avisoEl.innerHTML="⚠️ Pedido mínimo de R$ 30,00 para retirada. Adicione mais produtos.";
+      avisoEl.style.display="block";enviar.style.display="none";
+    }else{
+      avisoEl.style.display="none";enviar.style.display="block";
+    }
     gerarAgenda();
   }
 }
@@ -625,7 +653,7 @@ var agendaData=null, agendaHora=null;
 function horariosParaDia(diaSemana){
   // 0=Dom, 1=Seg, 2=Ter, 3=Qua, 4=Qui, 5=Sex, 6=Sáb
   if(diaSemana===0)return []; // Domingo fechado
-  if(diaSemana===6)return ["11:00","12:00","13:00"]; // Sábado 11h-13h
+  if(diaSemana===6)return ["11:00","12:00"]; // Sábado 11h-12h
   return ["11:00","12:00","13:00","14:00","15:00","16:00","17:00","18:00"]; // Seg-Sex 11h-18h
 }
 
@@ -711,7 +739,7 @@ function atualizarAgendaSelecionado(){
   if(agendaData&&agendaHora){
     var diasSemana=["Domingo","Segunda","Terça","Quarta","Quinta","Sexta","Sábado"];
     var meses=["Jan","Fev","Mar","Abr","Mai","Jun","Jul","Ago","Set","Out","Nov","Dez"];
-    el.textContent="📅 "+diasSemana[agendaData.getDay()]+", "+agendaData.getDate()+" de "+meses[agendaData.getMonth()]+" às "+agendaHora+" selecionado.";
+    el.textContent="✓ Retirada agendada: "+diasSemana[agendaData.getDay()]+", "+agendaData.getDate()+" de "+meses[agendaData.getMonth()]+" às "+agendaHora;
   }else{
     el.textContent="";
   }
@@ -731,6 +759,22 @@ function validarAgenda(){
   }
   document.getElementById("agenda-retirada-nome").classList.remove("erro");
   return true;
+}
+
+function calcularFrete(total){
+  var bairroCliente=(cliente&&cliente.bairro||"").toLowerCase();
+  var cidadeCliente=(cliente&&cliente.cidade||"").toLowerCase();
+  var bairroEntrega=document.getElementById("end-bairro")?document.getElementById("end-bairro").value.toLowerCase():"";
+  var bairro=bairroEntrega||bairroCliente;
+
+  var bairrosCentro=["centro","agronômica","prainha","jose mendes","josé mendes","coqueiros","estreito","capoeiras","abraão","abraao","coloninha","itaguaçu","jardim atlântico","monte cristo","bom abrigo","sapé","balneário"];
+
+  var isCentro=bairrosCentro.some(function(b){return bairro.includes(b);});
+
+  if(isCentro&&total>=30) return{valor:0,label:"Grátis 🎉"};
+  if(!isCentro&&total>=150) return{valor:0,label:"Grátis 🎉"};
+  if(isCentro) return{valor:5,label:"R$ 5,00"};
+  return{valor:15,label:"R$ 15,00"};
 }
 
 function mascaraCep(el){
@@ -768,38 +812,76 @@ function validarEndereco(){
 
 function gerarTextoWpp(){
   if(!cart.length)return"";
-  var total=0;
-  var linhas=cart.map(item=>{
-    total+=item.val;
-    var qtdFmt=item.qty>=1000?(item.qty/1000).toFixed(1).replace(".",",")+"kg":item.qty+"g";
-    return`• ${item.nome} — ${qtdFmt} — ${fmtPrice(item.val)}`;
+
+  // Agrupar itens duplicados somando quantidades
+  var agrupado={};
+  cart.forEach(function(item){
+    if(agrupado[item.cod]){
+      agrupado[item.cod].qty+=item.qty;
+      agrupado[item.cod].val+=item.val;
+    }else{
+      agrupado[item.cod]={nome:item.nome,qty:item.qty,val:item.val};
+    }
   });
-  var data=new Date().toLocaleDateString("pt-BR");
-  var numStr=window._numeroPedido?` — Pedido #${window._numeroPedido}`:"";
+
+  var subtotal=0;
+  var linhas=Object.values(agrupado).map(function(item){
+    subtotal+=item.val;
+    var qtdFmt=item.qty>=1000?(item.qty/1000).toFixed(1).replace(".",",")+"kg":item.qty+"g";
+    return"• "+item.nome+" — "+qtdFmt+" — "+fmtPrice(item.val);
+  });
+
+  var numPedidoLocal=JSON.parse(localStorage.getItem("pedidos_locais")||"[]").length+1;
+  var numStr=window._numeroPedido?"#"+window._numeroPedido:"#"+numPedidoLocal;
+  var dataHoje=new Date().toLocaleDateString("pt-BR");
   var c=cliente||{};
-  var info=c.nome?`👤 *${c.nome}*${c.email?" — "+c.email:""}\n📍 ${c.bairro}, ${c.cidade}${c.telefone?"\n📞 "+c.telefone:""}\n\n`:"";
-  var agendaStr="";
-  if(tipoEntrega==="retirada"&&agendaData&&agendaHora){
-    var diasSemana=["Domingo","Segunda","Terça","Quarta","Quinta","Sexta","Sábado"];
-    var meses=["Jan","Fev","Mar","Abr","Mai","Jun","Jul","Ago","Set","Out","Nov","Dez"];
-    var nomeRetirada=document.getElementById("agenda-retirada-nome").value.trim();
-    agendaStr="\n📅 Retirada agendada: "+diasSemana[agendaData.getDay()]+", "+agendaData.getDate()+" de "+meses[agendaData.getMonth()]+" às "+agendaHora+
-    (nomeRetirada?"\n👤 Retira: "+nomeRetirada:"");
-  }
-  var entregaStr=tipoEntrega==="entrega"?"🚚 Entrega":"🏪 Retirada";
-  var enderecoStr="";
+
+  var frete=tipoEntrega==="entrega"?calcularFrete(subtotal):{valor:0,label:"—"};
+  var totalFinal=subtotal+frete.valor;
+
+  var msg="";
+  msg+="🛒 *Pedido "+numStr+" — "+dataHoje+"*";
+
+  msg+="\n\n👤 *"+(c.nome||"Cliente")+"*";
+  if(c.telefone) msg+="\n📞 "+c.telefone;
+  if(c.email)    msg+="\n📧 "+c.email;
+
   if(tipoEntrega==="entrega"){
-    var cep=document.getElementById("end-cep").value;
-    var rua=document.getElementById("end-rua").value;
-    var num=document.getElementById("end-numero").value;
+    var cep   =document.getElementById("end-cep").value;
+    var rua   =document.getElementById("end-rua").value;
+    var num   =document.getElementById("end-numero").value;
     var bairro=document.getElementById("end-bairro").value;
     var cidade=document.getElementById("end-cidade").value;
-    var comp=document.getElementById("end-complemento").value;
-    var ref=document.getElementById("end-referencia").value;
-    enderecoStr="\n📍 "+rua+", "+num+(comp?" — "+comp:"")+"\n    "+bairro+", "+cidade+" — CEP: "+cep+(ref?"\n    Ref: "+ref:"");
+    var comp  =document.getElementById("end-complemento").value;
+    var ref   =document.getElementById("end-referencia").value;
+    msg+="\n\n🚚 *Entrega*";
+    msg+="\n📍 "+rua+", "+num;
+    if(comp) msg+=" — "+comp;
+    msg+="\n    "+bairro+", "+cidade;
+    msg+="\n    CEP: "+cep;
+    if(ref) msg+="\n    Ref: "+ref;
+  }else if(tipoEntrega==="retirada"){
+    msg+="\n\n🏪 *Retirada*";
+    if(agendaData&&agendaHora){
+      var diasSemana=["Domingo","Segunda","Terça","Quarta","Quinta","Sexta","Sábado"];
+      var meses=["Janeiro","Fevereiro","Março","Abril","Maio","Junho","Julho","Agosto","Setembro","Outubro","Novembro","Dezembro"];
+      msg+="\n📅 "+diasSemana[agendaData.getDay()]+", "+agendaData.getDate()+" de "+meses[agendaData.getMonth()];
+      msg+="\n⏰ Horário: "+agendaHora;
+      var nomeRet=document.getElementById("agenda-retirada-nome").value.trim();
+      if(nomeRet) msg+="\n👤 Retira: "+nomeRet;
+    }
   }
-  return`🛒 *Pedido${numStr} — ${data}*\n\n${info}📦 ${entregaStr}${enderecoStr}${agendaStr}\n\n${linhas.join("\n")}\n\n*Total: ${fmtPrice(total)}*`;
+
+  msg+="\n\n"+linhas.join("\n");
+  msg+="\n\nSubtotal: "+fmtPrice(subtotal);
+  if(tipoEntrega==="entrega"){
+    msg+="\nFrete: "+(frete.valor===0?"Grátis 🎉":fmtPrice(frete.valor));
+  }
+  msg+="\n*Total: "+fmtPrice(totalFinal)+"*";
+
+  return msg;
 }
+
 
 function copiarWpp(){
   var txt=document.getElementById("wpp-texto").value;
@@ -879,17 +961,6 @@ async function enviarPedido(){
   }
 
   window.open("https://wa.me/5548991446378?text="+encodeURIComponent(txt),"_blank","noopener");
-  // Mostrar agendamento no modal de sucesso
-  var sucAg=document.getElementById("sucesso-agendamento");
-  if(tipoEntrega==="retirada"&&agendaData&&agendaHora){
-    var diasSemana=["Domingo","Segunda","Terça","Quarta","Quinta","Sexta","Sábado"];
-    var meses=["Jan","Fev","Mar","Abr","Mai","Jun","Jul","Ago","Set","Out","Nov","Dez"];
-    var nomeRet=document.getElementById("agenda-retirada-nome").value.trim();
-    sucAg.innerHTML="📅 Retirada agendada para:<br><strong>"+diasSemana[agendaData.getDay()]+", "+agendaData.getDate()+" de "+meses[agendaData.getMonth()]+" às "+agendaHora+"</strong>"+(nomeRet?"<br>👤 Retira: "+nomeRet:"");
-    sucAg.style.display="block";
-  }else{
-    sucAg.style.display="none";
-  }
   lancarConfetti();
   document.getElementById("sucesso-overlay").classList.add("ativo");
 }
@@ -940,6 +1011,26 @@ function renderCart(){
   }).join("");
 
   document.getElementById("cart-total-val").textContent=fmtPrice(total);
+
+  // Resumo de valores
+  var resumo=document.getElementById("resumo-valores");
+  var resumoSubtotal=document.getElementById("resumo-subtotal");
+  var resumoFrete=document.getElementById("resumo-frete");
+  var resumoFreteRow=document.getElementById("resumo-frete-row");
+  var resumoTotal=document.getElementById("resumo-total");
+
+  resumoSubtotal.textContent=fmtPrice(total);
+
+  if(tipoEntrega==="entrega"){
+    var frete=calcularFrete(total);
+    resumoFreteRow.style.display="flex";
+    resumoFrete.textContent=frete.label;
+    resumoTotal.textContent=frete.valor>0?fmtPrice(total+frete.valor):fmtPrice(total);
+  }else{
+    resumoFreteRow.style.display="none";
+    resumoTotal.textContent=fmtPrice(total);
+  }
+  resumo.style.display="block";
   summary.style.display="block";
   wppTexto.value=gerarTextoWpp();
   wppSection.style.display="block";
