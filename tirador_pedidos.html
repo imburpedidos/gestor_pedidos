@@ -155,6 +155,7 @@ td:nth-child(8),th:nth-child(8){width:80px;}
 .aviso-minimo{margin-top:10px;padding:10px 14px;border-radius:var(--radius);background:#FFF0E0;color:#C05C00;font-size:13px;font-weight:500;display:none;}
 .aviso-minimo.info{background:var(--accent-light);color:var(--accent);}
 .enviar-btn{margin-top:14px;width:100%;padding:12px;border:none;border-radius:var(--radius);background:var(--accent);color:#fff;font-size:15px;font-weight:600;font-family:var(--font);cursor:pointer;transition:background .15s;display:none;}
+.enviar-btn.desabilitado{background:#CCCCCC;color:#888;cursor:not-allowed;}
 .enviar-btn:hover{background:#235a40;}
 
 /* WhatsApp */
@@ -398,6 +399,9 @@ td:nth-child(8),th:nth-child(8){width:80px;}
               <input type="text" id="end-referencia" placeholder="Próximo a... (opcional)">
             </div>
           </div>
+        </div>
+        <div id="aviso-login" style="display:none;margin-top:10px;padding:10px 14px;border-radius:var(--radius);background:#F0F0F0;color:var(--muted);font-size:13px;font-weight:500;text-align:center;">
+          🔒 Faça seu <span style="color:var(--accent);cursor:pointer;font-weight:600;text-decoration:underline;" onclick="abrirLogin()">cadastro/login</span> para liberar o envio do pedido
         </div>
         <button class="enviar-btn" id="enviar-btn" onclick="enviarPedido()">✅ Enviar pedido por WhatsApp</button>
       </div>
@@ -1037,6 +1041,22 @@ function renderCart(){
 
   document.getElementById("cart-total-val").textContent=fmtPrice(total);
 
+  // Controle de login no botão enviar
+  var avisoLogin=document.getElementById("aviso-login");
+  var enviarBtn=document.getElementById("enviar-btn");
+  if(!cliente){
+    avisoLogin.style.display="block";
+    enviarBtn.classList.add("desabilitado");
+    enviarBtn.onclick=function(){
+      alert("Faça seu cadastro/login para liberar o envio do pedido.");
+      abrirLogin();
+    };
+  }else{
+    avisoLogin.style.display="none";
+    enviarBtn.classList.remove("desabilitado");
+    enviarBtn.onclick=enviarPedido;
+  }
+
   // Resumo de valores
   var resumo=document.getElementById("resumo-valores");
   var resumoSubtotal=document.getElementById("resumo-subtotal");
@@ -1151,6 +1171,7 @@ function mostrarClienteLogado(){
   document.getElementById("cliente-info-bar").style.display="block";
   document.getElementById("cliente-nome-bar").textContent="Olá, "+cliente.nome+"! 👋";
   document.getElementById("entrar-btn").style.display="none";
+  if(cart.length)renderCart();
 }
 
 function deslogar(){
