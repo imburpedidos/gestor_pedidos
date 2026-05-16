@@ -359,7 +359,7 @@ td:nth-child(8),th:nth-child(8){width:80px;}
           <div class="agenda-selecionado" id="agenda-selecionado"></div>
           <div class="endereco-field" style="margin-top:12px;">
             <label>Nome de quem vai retirar <span style="color:var(--danger)">*</span></label>
-            <input type="text" id="agenda-retirada-nome" placeholder="Nome completo de quem vai retirar">
+            <input type="text" id="agenda-retirada-nome" oninput="atualizarWpp()" placeholder="Nome completo de quem vai retirar">
           </div>
         </div>
         <div class="aviso-minimo" id="aviso-minimo">⚠️ Pedido mínimo de R$ 50,00 para entrega. Adicione mais produtos ou escolha Retirada.</div>
@@ -368,35 +368,35 @@ td:nth-child(8),th:nth-child(8){width:80px;}
           <div class="endereco-row">
             <div class="endereco-field" style="max-width:140px;">
               <label>CEP <span>*</span></label>
-              <input type="text" id="end-cep" placeholder="00000-000" maxlength="9" oninput="mascaraCep(this);buscarCep(this);">
+              <input type="text" id="end-cep" oninput="atualizarWpp()" placeholder="00000-000" maxlength="9" oninput="mascaraCep(this);buscarCep(this);">
             </div>
             <div class="endereco-field">
               <label>Rua <span>*</span></label>
-              <input type="text" id="end-rua" placeholder="Nome da rua">
+              <input type="text" id="end-rua" oninput="atualizarWpp()" placeholder="Nome da rua">
             </div>
           </div>
           <div class="endereco-row">
             <div class="endereco-field" style="max-width:100px;">
               <label>Número <span>*</span></label>
-              <input type="text" id="end-numero" placeholder="Nº">
+              <input type="text" id="end-numero" oninput="atualizarWpp()" placeholder="Nº">
             </div>
             <div class="endereco-field">
               <label>Bairro <span>*</span></label>
-              <input type="text" id="end-bairro" placeholder="Seu bairro">
+              <input type="text" id="end-bairro" oninput="atualizarWpp()" placeholder="Seu bairro">
             </div>
             <div class="endereco-field">
               <label>Cidade <span>*</span></label>
-              <input type="text" id="end-cidade" placeholder="Sua cidade">
+              <input type="text" id="end-cidade" oninput="atualizarWpp()" placeholder="Sua cidade">
             </div>
           </div>
           <div class="endereco-row">
             <div class="endereco-field">
               <label>Complemento</label>
-              <input type="text" id="end-complemento" placeholder="Apto, bloco... (opcional)">
+              <input type="text" id="end-complemento" oninput="atualizarWpp()" placeholder="Apto, bloco... (opcional)">
             </div>
             <div class="endereco-field">
               <label>Ponto de referência</label>
-              <input type="text" id="end-referencia" placeholder="Próximo a... (opcional)">
+              <input type="text" id="end-referencia" oninput="atualizarWpp()" placeholder="Próximo a... (opcional)">
             </div>
           </div>
         </div>
@@ -597,6 +597,7 @@ function addToCart(cod){
 function removeFromCart(cod){
   cart=cart.filter(function(item){return item.cod!==cod;});
   updateCartBadge();renderCart();renderTable();
+  if(tipoEntrega)selecionarEntrega(tipoEntrega);
 }
 
 function changeCartQty(cod,delta){
@@ -616,6 +617,7 @@ function changeCartQty(cod,delta){
   cart.push({cod:p.cod,nome:p.nome,qty:novaQty,val:p.g100*(novaQty/100)});
   renderCart();
   renderTable();
+  if(tipoEntrega)selecionarEntrega(tipoEntrega);
 }
 
 function updateCartBadge(){
@@ -634,7 +636,7 @@ function selecionarEntrega(tipo){
   var endForm=document.getElementById("endereco-form");
   var agendaForm=document.getElementById("agenda-form");
   // Atualizar resumo ao trocar tipo de entrega
-  if(cart.length)renderCart();
+  if(cart.length){renderCart();setTimeout(atualizarWpp,50);}
   var avisoEl=aviso;
   if(tipo==="entrega"){
     endForm.classList.add("visivel");
@@ -709,6 +711,7 @@ function gerarAgenda(){
         btn.classList.add("ativo");
         renderHorarios(dia,minimoRetirada);
         atualizarAgendaSelecionado();
+      atualizarWpp();
       };
     })(d);
     datasEl.appendChild(btn);
@@ -735,6 +738,7 @@ function renderHorarios(data,minimoRetirada){
       document.querySelectorAll(".agenda-hora-btn").forEach(function(b){b.classList.remove("ativo");});
       btn.classList.add("ativo");
       atualizarAgendaSelecionado();
+      atualizarWpp();
     };
     horasEl.appendChild(btn);
   });
@@ -789,6 +793,13 @@ function calcularFrete(total){
   return{valor:15,label:"R$ 15,00"};
 }
 
+function atualizarWpp(){
+  var wppTexto=document.getElementById("wpp-texto");
+  if(wppTexto&&cart.length&&tipoEntrega){
+    wppTexto.value=gerarTextoWpp();
+  }
+}
+
 function mascaraCep(el){
   var v=el.value.replace(/[^0-9]/g,"");
   if(v.length>5)v=v.slice(0,5)+"-"+v.slice(5,8);
@@ -805,6 +816,7 @@ async function buscarCep(el){
       document.getElementById("end-rua").value=data.logradouro||"";
       document.getElementById("end-bairro").value=data.bairro||"";
       document.getElementById("end-cidade").value=data.localidade||"";
+      atualizarWpp();
     }
   }catch(e){}
 }
@@ -1025,7 +1037,7 @@ function renderCart(){
   el.innerHTML=itensAgrupados.map(function(item,i){
     total+=item.val;
     var qtdFmt=item.qty>=1000?(item.qty/1000).toFixed(1).replace(".",",")+"kg":item.qty+"g";
-    return`<div class="cart-item" style="flex-direction:column;align-items:flex-start;">
+    return`<div class="cart-item" style="flex-direction:column;align-items:flex-start;padding:10px 14px;margin:0 -4px;">
       <div style="display:flex;align-items:center;gap:8px;width:100%;">
         <div class="cart-item-name" style="font-size:13px;font-weight:500;flex:1;">${item.nome}</div>
         <div class="qty-ctrl" style="gap:4px;flex-shrink:0;">
