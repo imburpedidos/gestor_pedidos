@@ -209,7 +209,7 @@ td:nth-child(8),th:nth-child(8){width:80px;}
 /* Identificação */
 .id-overlay{display:none;position:fixed;inset:0;z-index:2000;background:rgba(0,0,0,.5);align-items:center;justify-content:center;}
 .id-overlay.aberto{display:flex;}
-.id-box{background:#fff;border-radius:16px;padding:32px 28px;max-width:400px;width:92%;box-shadow:0 8px 32px rgba(0,0,0,.15);max-height:90vh;overflow-y:auto;}
+.id-box{background:#fff;border-radius:16px;padding:32px 28px;max-width:400px;width:92%;box-shadow:0 8px 32px rgba(0,0,0,.15);max-height:90vh;overflow-y:auto;position:relative;}
 .id-titulo{font-size:20px;font-weight:600;color:var(--accent);margin-bottom:4px;}
 .id-sub{font-size:13px;color:var(--muted);margin-bottom:24px;}
 .id-field{margin-bottom:16px;}
@@ -289,7 +289,8 @@ td:nth-child(8),th:nth-child(8){width:80px;}
     <div>
       <h1><img src="data:image/png;base64,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" style="height:32px;width:auto;vertical-align:middle;margin-right:8px;margin-bottom:14px;mix-blend-mode:multiply;">Pedidos Imbur</h1>
       <p>Escolha a quantidade dos produtos, envie para o carrinho e mande para o nosso WhatsApp</p>
-      <p style="font-size:12px;color:var(--danger);font-weight:500;margin-top:4px;">🚚 Pedidos para entrega somente para a região da grande Florianópolis</p>
+      <p style="font-size:12px;color:var(--muted);font-weight:600;margin-top:4px;">📍 Rua Felipe Schmidt, 554, loja 1 — Centro, Florianópolis - SC</p>
+      <p style="font-size:12px;color:var(--danger);font-weight:500;margin-top:3px;">🚚 Pedidos para entrega somente para a região da grande Florianópolis</p>
     </div>
     <div style="margin-top:4px;">
       <button class="entrar-btn" id="entrar-btn" onclick="abrirLogin()" style="display:none">Entrar</button>
@@ -335,10 +336,10 @@ td:nth-child(8),th:nth-child(8){width:80px;}
 
   <div id="view-carrinho" style="display:none">
     <div class="cart-box">
-      <div id="cart-list"></div>
+      <div id="cart-list" style="margin-bottom:14px;"></div>
       <div style="margin-bottom:12px;">
-        <button onclick="showTab('produtos')" style="width:100%;padding:10px;border:1.5px dashed var(--accent);border-radius:var(--radius);background:none;color:var(--accent);font-size:13px;font-weight:600;font-family:var(--font);cursor:pointer;">
-          ＋ Adicionar mais itens
+        <button onclick="showTab('produtos')" style="width:100%;padding:10px;border:1px solid var(--accent);border-radius:var(--radius);background:var(--accent-light);color:var(--accent);font-size:13px;font-weight:600;font-family:var(--font);cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px;">
+          🛒 Adicionar mais itens
         </button>
       </div>
       <div id="cart-summary" style="display:none">
@@ -437,6 +438,7 @@ td:nth-child(8),th:nth-child(8){width:80px;}
 
 <div class="id-overlay" id="id-overlay">
   <div class="id-box">
+    <button onclick="document.getElementById('id-overlay').classList.remove('aberto')" style="position:absolute;top:12px;right:16px;background:none;border:none;font-size:22px;cursor:pointer;color:var(--muted);line-height:1;">✕</button>
     <div class="id-titulo">👋 Olá! Antes de continuar</div>
     <div class="id-sub">Precisamos de algumas informações para preparar seu pedido.</div>
     <div class="id-field"><label>Nome</label><input type="text" id="id-nome" placeholder="Seu nome completo"></div>
@@ -588,20 +590,26 @@ function addToCart(cod){
   renderTable();
 }
 
-function removeFromCart(i){cart.splice(i,1);updateCartBadge();renderCart();renderTable();}
+function removeFromCart(cod){
+  cart=cart.filter(function(item){return item.cod!==cod;});
+  updateCartBadge();renderCart();renderTable();
+}
 
-function changeCartQty(i,delta){
-  var p=produtos.find(x=>x.cod===cart[i].cod);
+function changeCartQty(cod,delta){
+  var p=produtos.find(x=>x.cod===cod);
   var min=minPara(p);
-  var novaQty=cart[i].qty+(delta*50);
+  // Calcular qty total agrupada
+  var totalQty=cart.filter(x=>x.cod===cod).reduce(function(a,b){return a+b.qty;},0);
+  var novaQty=totalQty+(delta*50);
   if(novaQty<min){
-    if(confirm("Remover "+cart[i].nome+" do carrinho?")){
-      removeFromCart(i);
+    if(confirm("Remover "+p.nome+" do carrinho?")){
+      removeFromCart(cod);
     }
     return;
   }
-  cart[i].qty=novaQty;
-  cart[i].val=p.g100*(novaQty/100);
+  // Remover todos os itens com esse cod e adicionar um novo com a qty somada
+  cart=cart.filter(function(item){return item.cod!==cod;});
+  cart.push({cod:p.cod,nome:p.nome,qty:novaQty,val:p.g100*(novaQty/100)});
   renderCart();
   renderTable();
 }
@@ -862,6 +870,7 @@ function gerarTextoWpp(){
     if(ref) msg+="\n    Ref: "+ref;
   }else if(tipoEntrega==="retirada"){
     msg+="\n\n🏪 *Retirada*";
+    msg+="\n📍 Rua Felipe Schmidt, 554, loja 1 — Centro, Florianópolis - SC";
     if(agendaData&&agendaHora){
       var diasSemana=["Domingo","Segunda","Terça","Quarta","Quinta","Sexta","Sábado"];
       var meses=["Janeiro","Fevereiro","Março","Abril","Maio","Junho","Julho","Agosto","Setembro","Outubro","Novembro","Dezembro"];
@@ -899,6 +908,11 @@ function abrirWhatsapp(){
 }
 
 async function enviarPedido(){
+  if(!cliente){
+    alert("Por favor, faça sua identificação antes de enviar o pedido.");
+    document.getElementById("id-overlay").classList.add("aberto");
+    return;
+  }
   if(!validarEndereco())return;
   if(!validarAgenda())return;
   var txt=document.getElementById("wpp-texto").value;
@@ -991,22 +1005,33 @@ function renderCart(){
     document.getElementById("enviar-btn").style.display="block";
   }
 
+  // Agrupar itens duplicados
+  var agrupado={};
+  cart.forEach(function(item,i){
+    if(agrupado[item.cod]){
+      agrupado[item.cod].qty+=item.qty;
+      agrupado[item.cod].val+=item.val;
+    }else{
+      agrupado[item.cod]={nome:item.nome,qty:item.qty,val:item.val,cod:item.cod,i:i};
+    }
+  });
+  var itensAgrupados=Object.values(agrupado);
+
   var total=0;
-  el.innerHTML=cart.map((item,i)=>{
+  el.innerHTML=itensAgrupados.map(function(item,i){
     total+=item.val;
-    var step=50;
     var qtdFmt=item.qty>=1000?(item.qty/1000).toFixed(1).replace(".",",")+"kg":item.qty+"g";
-    return`<div class="cart-item">
-      <div style="flex:1">
-        <div class="cart-item-name">${item.nome}</div>
-        <div class="cart-item-sub">${fmtPrice(item.val)}</div>
+    return`<div class="cart-item" style="flex-direction:column;align-items:flex-start;">
+      <div style="display:flex;align-items:center;gap:8px;width:100%;">
+        <div class="cart-item-name" style="font-size:13px;font-weight:500;flex:1;">${item.nome}</div>
+        <div class="qty-ctrl" style="gap:4px;flex-shrink:0;">
+          <button class="qty-btn" style="width:24px;height:24px;font-size:15px;" onclick="changeCartQty('${item.cod}',-1)">−</button>
+          <span class="qty-val" style="width:36px;font-size:12px;text-align:center;">${qtdFmt}</span>
+          <button class="qty-btn" style="width:24px;height:24px;font-size:15px;" onclick="changeCartQty('${item.cod}',1)">+</button>
+        </div>
+        <button onclick="removeFromCart('${item.cod}')" style="cursor:pointer;background:#F0F0F0;border:none;font-size:10px;width:20px;height:20px;border-radius:50%;display:flex;align-items:center;justify-content:center;color:var(--faint);flex-shrink:0;">✕</button>
       </div>
-      <div class="qty-ctrl" style="gap:4px;">
-        <button class="qty-btn" style="width:22px;height:22px;font-size:14px;" onclick="changeCartQty(${i},-1)">−</button>
-        <span class="qty-val" style="width:38px;font-size:11px;">${qtdFmt}</span>
-        <button class="qty-btn" style="width:22px;height:22px;font-size:14px;" onclick="changeCartQty(${i},1)">+</button>
-      </div>
-      <button class="cart-remove" onclick="removeFromCart(${i})">✕</button>
+      <div class="cart-item-sub" style="font-size:12px;color:var(--accent);font-weight:600;margin-top:4px;">${fmtPrice(item.val)}</div>
     </div>`;
   }).join("");
 
