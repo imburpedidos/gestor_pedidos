@@ -1198,7 +1198,8 @@ async function enviarPedido(txtPreSalvo){
   }
 
   // Abrir pop-up de sucesso com botão WhatsApp
-  window.open("https://wa.me/5548991446378?text="+encodeURIComponent(txt),"_blank","noopener");
+  // Atualizar campo oculto com a mensagem final
+  document.getElementById("wpp-texto").value=txt;
   lancarConfetti();
   document.getElementById("sucesso-overlay").classList.add("ativo");
 }
