@@ -282,6 +282,16 @@ td:nth-child(8),th:nth-child(8){width:80px;}
 }
 .wpp-atendimento:hover{background:#25D366;color:#fff;}
 .wpp-atendimento:hover svg{fill:#fff;}
+/* Sugestões no carrinho */
+.sugestoes-wrap{margin-top:14px;padding-top:14px;padding-bottom:14px;border-top:1px solid var(--border);}
+.sugestoes-titulo{font-size:12px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.4px;margin-bottom:10px;}
+.sugestoes-lista{display:flex;gap:8px;flex-wrap:nowrap;overflow-x:auto;}
+.sugestao-card{display:flex;flex-direction:column;align-items:center;flex:1;min-width:70px;padding:8px;border:1px solid var(--border);border-radius:var(--radius);background:var(--surface);cursor:pointer;transition:all .15s;text-align:center;}
+.sugestao-card:hover{border-color:var(--accent);background:var(--accent-light);}
+.sugestao-nome{font-size:11px;font-weight:500;color:var(--text);line-height:1.3;margin-bottom:4px;}
+.sugestao-preco{font-size:10px;color:var(--muted);}
+.sugestao-add{margin-top:6px;font-size:10px;font-weight:600;color:var(--accent);}
+
 </style>
 </head>
 <body>
@@ -338,6 +348,10 @@ td:nth-child(8),th:nth-child(8){width:80px;}
   <div id="view-carrinho" style="display:none">
     <div class="cart-box">
       <div id="cart-list" style="margin-bottom:14px;"></div>
+      <div id="sugestoes-wrap" class="sugestoes-wrap" style="display:none;">
+        <div class="sugestoes-titulo">✨ Itens sugeridos</div>
+        <div class="sugestoes-lista" id="sugestoes-lista"></div>
+      </div>
       <div style="margin-bottom:12px;">
         <button onclick="showTab('produtos')" style="width:100%;padding:10px;border:1px solid var(--accent);border-radius:var(--radius);background:var(--accent-light);color:var(--accent);font-size:13px;font-weight:600;font-family:var(--font);cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px;">
           🛒 Adicionar mais itens
@@ -403,7 +417,7 @@ td:nth-child(8),th:nth-child(8){width:80px;}
         <div id="aviso-login" style="display:none;margin-top:10px;padding:10px 14px;border-radius:var(--radius);background:#F0F0F0;color:var(--muted);font-size:13px;font-weight:500;text-align:center;">
           🔒 Faça seu <span style="color:var(--accent);cursor:pointer;font-weight:600;text-decoration:underline;" onclick="abrirLogin()">cadastro/login</span> para liberar o envio do pedido
         </div>
-        <button class="enviar-btn" id="enviar-btn" onclick="enviarPedido()">✅ Enviar pedido por WhatsApp</button>
+        <button class="enviar-btn" id="enviar-btn" onclick="enviarPedido()">✅ Concluir pedido</button>
       </div>
     </div>
 
@@ -458,14 +472,18 @@ td:nth-child(8),th:nth-child(8){width:80px;}
 <div class="confetti-wrap" id="confetti-wrap"></div>
 
 <div class="sucesso-overlay" id="sucesso-overlay">
-  <div class="sucesso-box">
+  <div class="sucesso-box" style="position:relative;">
+    <button onclick="fecharSucesso()" style="position:absolute;top:10px;right:14px;background:none;border:none;font-size:22px;cursor:pointer;color:var(--muted);line-height:1;">✕</button>
     <div class="sucesso-emoji">🎉</div>
     <div class="sucesso-titulo">⚠️ Importante!</div>
     <div class="sucesso-msg">Pedido recebido!<br><br>Ainda é necessário confirmar método de pagamento e entrega/retirada no WhatsApp.</div>
-    <button class="sucesso-fechar" onclick="fecharSucesso()">Fechar</button>
+    <div id="sucesso-agendamento" style="display:none;margin-top:12px;padding:10px 14px;background:var(--accent-light);border-radius:var(--radius);font-size:13px;color:var(--accent);font-weight:600;"></div>
+    <button onclick="fecharSucesso();window.open('https://wa.me/5548991446378?text='+encodeURIComponent(document.getElementById('wpp-texto').value),'_blank','noopener')" style="margin-top:16px;width:100%;padding:12px;border:none;border-radius:var(--radius);background:#25D366;color:#fff;font-size:15px;font-weight:600;font-family:var(--font);cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" style="width:18px;height:18px;fill:#fff;"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+      Enviar pelo WhatsApp
+    </button>
   </div>
 </div>
-
 <script>
 var API_URL="https://imbur-pedidos.contatoimbur.workers.dev";
 
@@ -793,6 +811,75 @@ function calcularFrete(total){
   return{valor:15,label:"R$ 15,00"};
 }
 
+function gerarSugestoes(){
+  var wrap=document.getElementById("sugestoes-wrap");
+  var lista=document.getElementById("sugestoes-lista");
+  if(!cart.length){wrap.style.display="none";return;}
+
+  // Pegar categorias e cods dos itens no carrinho
+  var codsNoCarrinho=cart.map(function(i){return i.cod;});
+  var catsNoCarrinho=[...new Set(cart.map(function(i){
+    var p=produtos.find(function(x){return x.cod===i.cod;});
+    return p?p.cat:"";
+  }))];
+
+  // Sugerir produtos da mesma categoria que não estão no carrinho
+  var sugestoes=[];
+  produtos.forEach(function(p){
+    if(codsNoCarrinho.includes(p.cod))return;
+    if(catsNoCarrinho.includes(p.cat))sugestoes.push({p:p,prioridade:0});
+    else sugestoes.push({p:p,prioridade:1});
+  });
+
+  // Ordenar por prioridade (mesma categoria primeiro) e limitar a 6
+  sugestoes.sort(function(a,b){return a.prioridade-b.prioridade;});
+  sugestoes=sugestoes.slice(0,4);
+
+  if(!sugestoes.length){wrap.style.display="none";return;}
+
+  lista.innerHTML="";
+  sugestoes.forEach(function(s){
+    var p=s.p;
+    var div=document.createElement("div");
+    div.className="sugestao-card";
+    div.innerHTML='<div class="sugestao-nome">'+p.nome+'</div>'
+      +'<div class="sugestao-preco">R$ '+p.g100.toFixed(2).replace(".",",")+" /100g"+'</div>'
+      +'<div class="sugestao-add">+ Adicionar</div>';
+    div.onclick=(function(cod){return function(){adicionarSugestao(cod);};})(p.cod);
+    lista.appendChild(div);
+  });
+
+  wrap.style.display="block";
+}
+
+function adicionarSugestao(cod){
+  var p=produtos.find(function(x){return x.cod===cod;});
+  if(!p)return;
+  var min=minPara(p);
+  cart.push({cod:p.cod,nome:p.nome,qty:min,val:p.g100*(min/100)});
+  updateCartBadge();
+  renderCart();
+  renderTable();
+  if(tipoEntrega)selecionarEntrega(tipoEntrega);
+}
+
+function abrirConfirmacao(){
+  if(!cliente){
+    alert("Faça seu cadastro/login para liberar o envio do pedido.");
+    abrirLogin();
+    return;
+  }
+  if(!validarEndereco())return;
+  if(!validarAgenda())return;
+
+  // Atualizar resumo
+  var txt=gerarTextoWpp();
+  document.getElementById("wpp-texto").value=txt;
+  document.getElementById("confirmacao-resumo").textContent=txt;
+  var overlay=document.getElementById("confirmacao-overlay");
+  overlay.style.display="flex";
+}
+
 function atualizarWpp(){
   var wppTexto=document.getElementById("wpp-texto");
   if(wppTexto&&cart.length&&tipoEntrega){
@@ -932,9 +1019,10 @@ async function enviarPedido(){
   }
   if(!validarEndereco())return;
   if(!validarAgenda())return;
-  var txt=document.getElementById("wpp-texto").value;
+
+  var txt=gerarTextoWpp();
+  document.getElementById("wpp-texto").value=txt;
   if(!txt)return;
-  console.log("tipoEntrega no momento do envio:", tipoEntrega);
 
   // Salvar localmente
   var pedidosLocais=JSON.parse(localStorage.getItem("pedidos_locais")||"[]");
@@ -968,7 +1056,7 @@ async function enviarPedido(){
           entrega:tipoEntrega==="entrega"?"Entrega":tipoEntrega==="retirada"?"Retirada":"Não informado",
           agendamento:tipoEntrega==="retirada"&&agendaData&&agendaHora?
             (["Domingo","Segunda","Terça","Quarta","Quinta","Sexta","Sábado"][agendaData.getDay()]+
-            " "+agendaData.getDate()+"/"+("0"+(agendaData.getMonth()+1)).slice(-2)+
+            " "+agendaData.getDate()+"/"+(""+(agendaData.getMonth()+1)).slice(-2)+
             "/"+agendaData.getFullYear()+" às "+agendaHora+
             (document.getElementById("agenda-retirada-nome").value.trim()?" — Retira: "+document.getElementById("agenda-retirada-nome").value.trim():"")):"",
           endereco:tipoEntrega==="entrega"?(
@@ -987,14 +1075,30 @@ async function enviarPedido(){
         window._numeroPedido=json.numeroPedido;
         pedidosLocais[0].numero=json.numeroPedido;
         localStorage.setItem("pedidos_locais",JSON.stringify(pedidosLocais));
+        // Atualizar texto com número do pedido
+        txt=gerarTextoWpp();
+        document.getElementById("wpp-texto").value=txt;
       }
     }catch(e){}
   }
 
-  window.open("https://wa.me/5548991446378?text="+encodeURIComponent(txt),"_blank","noopener");
+  // Mostrar agendamento no pop-up de sucesso
+  var sucAg=document.getElementById("sucesso-agendamento");
+  if(tipoEntrega==="retirada"&&agendaData&&agendaHora){
+    var diasSemana=["Domingo","Segunda","Terça","Quarta","Quinta","Sexta","Sábado"];
+    var meses=["Jan","Fev","Mar","Abr","Mai","Jun","Jul","Ago","Set","Out","Nov","Dez"];
+    var nomeRet=document.getElementById("agenda-retirada-nome").value.trim();
+    sucAg.innerHTML="📅 "+diasSemana[agendaData.getDay()]+", "+agendaData.getDate()+" de "+meses[agendaData.getMonth()]+" às "+agendaHora+(nomeRet?"<br>👤 Retira: "+nomeRet:"");
+    sucAg.style.display="block";
+  }else{
+    sucAg.style.display="none";
+  }
+
+  // Abrir pop-up de sucesso com botão WhatsApp
   lancarConfetti();
   document.getElementById("sucesso-overlay").classList.add("ativo");
 }
+
 
 function renderCart(){
   var el=document.getElementById("cart-list");
@@ -1053,6 +1157,7 @@ function renderCart(){
   }).join("");
 
   document.getElementById("cart-total-val").textContent=fmtPrice(total);
+  gerarSugestoes();
 
   // Controle de login no botão enviar
   var avisoLogin=document.getElementById("aviso-login");
@@ -1252,12 +1357,32 @@ function showTab(tab){
 
 renderCats();renderTable();
 </script>
+<!-- Pop-up confirmação de pedido -->
+<div class="id-overlay" id="confirmacao-overlay" style="display:none;">
+  <div class="id-box" style="max-width:480px;">
+    <button onclick="document.getElementById('confirmacao-overlay').style.display='none' " style="position:absolute;top:12px;right:16px;background:none;border:none;font-size:22px;cursor:pointer;color:var(--muted);line-height:1;">✕</button>
+    <div class="id-titulo">📋 Resumo do pedido</div>
+    <div class="id-sub">Confira as informações antes de enviar</div>
+
+    <div id="confirmacao-resumo" style="background:#F7F5F2;border-radius:var(--radius);padding:14px;margin-bottom:16px;font-size:13px;line-height:1.8;white-space:pre-wrap;max-height:300px;overflow-y:auto;"></div>
+
+    <div style="background:#FFF8E1;border:1px solid #FFD54F;border-radius:var(--radius);padding:12px 14px;font-size:13px;color:#795548;margin-bottom:16px;line-height:1.6;">
+      ⚠️ <strong>Importante:</strong> Após enviar o pedido pelo WhatsApp, aguarde nossa confirmação. O pedido só estará confirmado após o retorno da nossa equipe.
+    </div>
+
+    <button onclick="enviarPedido()" style="width:100%;padding:14px;border:none;border-radius:var(--radius);background:#25D366;color:#fff;font-size:15px;font-weight:600;font-family:var(--font);cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" style="width:20px;height:20px;fill:#fff;"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+      Enviar pedido pelo WhatsApp
+    </button>
+  </div>
+</div>
+
 <!-- Pop-up info produto -->
 <div class="info-overlay" id="info-overlay" onclick="fecharInfo(event)">
   <div class="info-box" id="info-box">
     <button class="info-fechar" onclick="fecharInfo()">✕</button>
     <div class="info-nome" id="info-nome"></div>
-    <div class="info-secao">
+    <div class="info-secao" style="display:none;">
       <div class="info-secao-titulo">📷 Fotos</div>
       <div class="info-fotos" id="info-fotos"></div>
     </div>
