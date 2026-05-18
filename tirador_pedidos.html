@@ -381,39 +381,50 @@ td:nth-child(8),th:nth-child(8){width:80px;}
         <div class="endereco-form" id="endereco-form">
           <div class="endereco-titulo">📍 Endereço de entrega</div>
           <div class="endereco-row">
-            <div class="endereco-field" style="max-width:140px;">
+            <div class="endereco-field">
               <label>CEP <span>*</span></label>
-              <input type="text" id="end-cep" oninput="atualizarWpp();verificarProntoParaEnviar()" placeholder="00000-000" maxlength="9" oninput="mascaraCep(this);buscarCep(this);">
-            </div>
-            <div class="endereco-field">
-              <label>Rua <span>*</span></label>
-              <input type="text" id="end-rua" oninput="atualizarWpp();buscarPorRua(this);verificarProntoParaEnviar()" placeholder="Nome da rua">
-            </div>
-          </div>
-          <div class="endereco-row">
-            <div class="endereco-field" style="max-width:100px;">
-              <label>Número <span>*</span></label>
-              <input type="text" id="end-numero" oninput="atualizarWpp();verificarProntoParaEnviar()" placeholder="Nº">
-            </div>
-            <div class="endereco-field">
-              <label>Bairro <span>*</span></label>
-              <input type="text" id="end-bairro" oninput="atualizarWpp();verificarProntoParaEnviar()" placeholder="Seu bairro">
-            </div>
-            <div class="endereco-field">
-              <label>Cidade <span>*</span></label>
-              <input type="text" id="end-cidade" oninput="atualizarWpp();verificarProntoParaEnviar()" placeholder="Sua cidade">
+              <div style="display:flex;gap:8px;">
+                <input type="text" id="end-cep" placeholder="00000-000" maxlength="9" oninput="mascaraCep(this)" onkeydown="if(event.key==='Enter'){event.preventDefault();buscarCep(this);}" style="flex:1;padding:9px 12px;border:1px solid var(--border);border-radius:var(--radius);font-size:13px;font-family:var(--font);">
+                <button onclick="buscarCep(document.getElementById('end-cep'))" style="padding:9px 14px;border:none;border-radius:var(--radius);background:var(--accent);color:#fff;font-size:13px;font-weight:600;font-family:var(--font);cursor:pointer;">Buscar</button>
+              </div>
             </div>
           </div>
-          <div class="endereco-row">
-            <div class="endereco-field">
-              <label>Complemento</label>
-              <input type="text" id="end-complemento" oninput="atualizarWpp()" placeholder="Apto, bloco... (opcional)">
+          <div id="end-resultado" style="display:none;">
+            <div class="endereco-row">
+              <div class="endereco-field">
+                <label>Rua</label>
+                <input type="text" id="end-rua" readonly style="padding:9px 12px;border:1px solid var(--border);border-radius:var(--radius);font-size:13px;font-family:var(--font);background:#f9f9f9;width:100%;">
+              </div>
             </div>
-            <div class="endereco-field">
-              <label>Ponto de referência</label>
-              <input type="text" id="end-referencia" oninput="atualizarWpp()" placeholder="Próximo a... (opcional)">
+            <div class="endereco-row">
+              <div class="endereco-field">
+                <label>Bairro</label>
+                <input type="text" id="end-bairro" readonly style="padding:9px 12px;border:1px solid var(--border);border-radius:var(--radius);font-size:13px;font-family:var(--font);background:#f9f9f9;width:100%;">
+              </div>
+              <div class="endereco-field">
+                <label>Cidade</label>
+                <input type="text" id="end-cidade" readonly style="padding:9px 12px;border:1px solid var(--border);border-radius:var(--radius);font-size:13px;font-family:var(--font);background:#f9f9f9;width:100%;">
+              </div>
             </div>
+            <div class="endereco-row">
+              <div class="endereco-field" style="max-width:120px;">
+                <label>Número <span>*</span></label>
+                <input type="text" id="end-numero" placeholder="Nº" oninput="atualizarWpp();verificarProntoParaEnviar()">
+              </div>
+              <div class="endereco-field">
+                <label>Complemento</label>
+                <input type="text" id="end-complemento" placeholder="Apto, bloco... (opcional)" oninput="atualizarWpp()">
+              </div>
+            </div>
+            <div class="endereco-row">
+              <div class="endereco-field">
+                <label>Ponto de referência</label>
+                <input type="text" id="end-referencia" placeholder="Próximo a... (opcional)" oninput="atualizarWpp()">
+              </div>
+            </div>
+            <button onclick="salvarEndereco()" style="margin-top:8px;width:100%;padding:9px;border:1px solid var(--accent);border-radius:var(--radius);background:var(--accent-light);color:var(--accent);font-size:13px;font-weight:600;font-family:var(--font);cursor:pointer;">💾 Salvar endereço</button>
           </div>
+          <div id="end-erro" style="display:none;margin-top:8px;padding:10px;background:#fff0f0;border-radius:var(--radius);font-size:13px;color:var(--danger);"></div>
         </div>
         <div id="aviso-login" style="display:none;margin-top:10px;padding:10px 14px;border-radius:var(--radius);background:#F0F0F0;color:var(--muted);font-size:13px;font-weight:500;text-align:center;">
           🔒 Faça seu <span style="color:var(--accent);cursor:pointer;font-weight:600;text-decoration:underline;" onclick="abrirLogin()">cadastro/login</span> para liberar o envio do pedido
@@ -669,6 +680,7 @@ function selecionarEntrega(tipo){
   if(tipo==="entrega"){
     endForm.classList.add("visivel");
     agendaForm.classList.remove("visivel");
+    carregarEnderecoSalvo();
     if(total<50){
       avisoEl.innerHTML="⚠️ Pedido mínimo de R$ 50,00 para entrega. Adicione mais produtos ou escolha Retirada.";
       avisoEl.style.display="block";enviar.style.display="none";
@@ -977,39 +989,65 @@ async function buscarPorRua(el){
   },800);
 }
 
-var _buscarRuaTimer=null;
-async function buscarPorRua(el){
-  clearTimeout(_buscarRuaTimer);
-  var rua=el.value.trim();
-  var cidade=document.getElementById("end-cidade").value.trim()||"Florianópolis";
-  if(rua.length<5)return;
-  _buscarRuaTimer=setTimeout(async function(){
-    try{
-      var res=await fetch("https://viacep.com.br/ws/SC/"+encodeURIComponent(cidade)+"/"+encodeURIComponent(rua)+"/json/");
-      var data=await res.json();
-      if(Array.isArray(data)&&data.length>0){
-        var primeiro=data[0];
-        document.getElementById("end-cep").value=primeiro.cep||"";
-        document.getElementById("end-bairro").value=primeiro.bairro||"";
-        document.getElementById("end-cidade").value=primeiro.localidade||cidade;
-      }
-    }catch(e){}
-  },800);
-}
-
 async function buscarCep(el){
-  var cep=el.value.replace(/[^0-9]/g,"");
-  if(cep.length!==8)return;
+  var cep=(el.value||"").replace(/[^0-9]/g,"");
+  if(cep.length!==8){
+    document.getElementById("end-erro").style.display="block";
+    document.getElementById("end-erro").textContent="CEP deve ter 8 dígitos.";
+    return;
+  }
+  document.getElementById("end-erro").style.display="none";
   try{
     var res=await fetch("https://viacep.com.br/ws/"+cep+"/json/");
     var data=await res.json();
-    if(!data.erro){
-      document.getElementById("end-rua").value=data.logradouro||"";
-      document.getElementById("end-bairro").value=data.bairro||"";
-      document.getElementById("end-cidade").value=data.localidade||"";
-      atualizarWpp();
+    if(data.erro){
+      document.getElementById("end-erro").style.display="block";
+      document.getElementById("end-erro").textContent="CEP não encontrado. Verifique e tente novamente.";
+      document.getElementById("end-resultado").style.display="none";
+      return;
     }
-  }catch(e){}
+    document.getElementById("end-rua").value=data.logradouro||"";
+    document.getElementById("end-bairro").value=data.bairro||"";
+    document.getElementById("end-cidade").value=data.localidade||"";
+    document.getElementById("end-resultado").style.display="block";
+    document.getElementById("end-numero").focus();
+    atualizarWpp();
+    verificarProntoParaEnviar();
+    if(tipoEntrega)selecionarEntrega(tipoEntrega);
+  }catch(e){
+    document.getElementById("end-erro").style.display="block";
+    document.getElementById("end-erro").textContent="Erro ao buscar CEP. Verifique sua conexão.";
+  }
+}
+
+function salvarEndereco(){
+  if(!cliente)return;
+  var enderecoSalvo={
+    cep:document.getElementById("end-cep").value,
+    rua:document.getElementById("end-rua").value,
+    bairro:document.getElementById("end-bairro").value,
+    cidade:document.getElementById("end-cidade").value,
+    numero:document.getElementById("end-numero").value,
+    complemento:document.getElementById("end-complemento").value,
+    referencia:document.getElementById("end-referencia").value
+  };
+  localStorage.setItem("endereco_"+cliente.email, JSON.stringify(enderecoSalvo));
+  alert("Endereço salvo! Na próxima compra será preenchido automaticamente.");
+}
+
+function carregarEnderecoSalvo(){
+  if(!cliente)return;
+  var salvo=localStorage.getItem("endereco_"+cliente.email);
+  if(!salvo)return;
+  var e=JSON.parse(salvo);
+  document.getElementById("end-cep").value=e.cep||"";
+  document.getElementById("end-rua").value=e.rua||"";
+  document.getElementById("end-bairro").value=e.bairro||"";
+  document.getElementById("end-cidade").value=e.cidade||"";
+  document.getElementById("end-numero").value=e.numero||"";
+  document.getElementById("end-complemento").value=e.complemento||"";
+  document.getElementById("end-referencia").value=e.referencia||"";
+  if(e.cep)document.getElementById("end-resultado").style.display="block";
 }
 
 function validarEndereco(){
