@@ -385,7 +385,7 @@ td:nth-child(8),th:nth-child(8){width:80px;}
               <label>CEP <span>*</span></label>
               <div style="display:flex;gap:8px;">
                 <input type="text" id="end-cep" placeholder="00000-000" maxlength="9" oninput="mascaraCep(this)" onkeydown="if(event.key==='Enter'){event.preventDefault();buscarCep(this);}" style="flex:1;padding:9px 12px;border:1px solid var(--border);border-radius:var(--radius);font-size:13px;font-family:var(--font);">
-                <button onclick="buscarCep(document.getElementById('end-cep'))" style="padding:9px 14px;border:none;border-radius:var(--radius);background:var(--accent);color:#fff;font-size:13px;font-weight:600;font-family:var(--font);cursor:pointer;">Buscar</button>
+                <button onclick="buscarCepBtn()" style="padding:9px 14px;border:none;border-radius:var(--radius);background:var(--accent);color:#fff;font-size:13px;font-weight:600;font-family:var(--font);cursor:pointer;">Buscar</button>
               </div>
             </div>
           </div>
@@ -425,6 +425,17 @@ td:nth-child(8),th:nth-child(8){width:80px;}
             <button onclick="salvarEndereco()" style="margin-top:8px;width:100%;padding:9px;border:1px solid var(--accent);border-radius:var(--radius);background:var(--accent-light);color:var(--accent);font-size:13px;font-weight:600;font-family:var(--font);cursor:pointer;">💾 Salvar endereço</button>
           </div>
           <div id="end-erro" style="display:none;margin-top:8px;padding:10px;background:#fff0f0;border-radius:var(--radius);font-size:13px;color:var(--danger);"></div>
+        </div>
+
+        <!-- Endereço salvo -->
+        <div id="end-salvo-box" style="display:none;margin-top:10px;padding:12px 14px;border:1px solid var(--accent);border-radius:var(--radius);background:var(--accent-light);">
+          <div style="display:flex;justify-content:space-between;align-items:flex-start;">
+            <div>
+              <div style="font-size:12px;font-weight:600;color:var(--accent);margin-bottom:4px;">📍 Endereço de entrega</div>
+              <div id="end-salvo-texto" style="font-size:13px;color:var(--text);line-height:1.6;"></div>
+            </div>
+            <button onclick="alterarEndereco()" style="background:none;border:1px solid var(--accent);border-radius:var(--radius);padding:4px 10px;font-size:12px;font-weight:600;color:var(--accent);cursor:pointer;white-space:nowrap;margin-left:10px;">✏️ Alterar</button>
+          </div>
         </div>
         <div id="aviso-login" style="display:none;margin-top:10px;padding:10px 14px;border-radius:var(--radius);background:#F0F0F0;color:var(--muted);font-size:13px;font-weight:500;text-align:center;">
           🔒 Faça seu <span style="color:var(--accent);cursor:pointer;font-weight:600;text-decoration:underline;" onclick="abrirLogin()">cadastro/login</span> para liberar o envio do pedido
@@ -989,6 +1000,10 @@ async function buscarPorRua(el){
   },800);
 }
 
+function buscarCepBtn(){
+  buscarCep(document.getElementById("end-cep"));
+}
+
 async function buscarCep(el){
   var cep=(el.value||"").replace(/[^0-9]/g,"");
   if(cep.length!==8){
@@ -1021,18 +1036,35 @@ async function buscarCep(el){
 }
 
 function salvarEndereco(){
-  if(!cliente)return;
+  var cep=document.getElementById("end-cep").value;
+  var rua=document.getElementById("end-rua").value;
+  var bairro=document.getElementById("end-bairro").value;
+  var cidade=document.getElementById("end-cidade").value;
+  var numero=document.getElementById("end-numero").value.trim();
+  if(!numero){alert("Por favor, informe o número.");return;}
   var enderecoSalvo={
-    cep:document.getElementById("end-cep").value,
-    rua:document.getElementById("end-rua").value,
-    bairro:document.getElementById("end-bairro").value,
-    cidade:document.getElementById("end-cidade").value,
-    numero:document.getElementById("end-numero").value,
+    cep:cep,rua:rua,bairro:bairro,cidade:cidade,
+    numero:numero,
     complemento:document.getElementById("end-complemento").value,
     referencia:document.getElementById("end-referencia").value
   };
-  localStorage.setItem("endereco_"+cliente.email, JSON.stringify(enderecoSalvo));
-  alert("Endereço salvo! Na próxima compra será preenchido automaticamente.");
+  if(cliente)localStorage.setItem("endereco_"+cliente.email, JSON.stringify(enderecoSalvo));
+  // Mostrar resumo e ocultar formulário
+  var linhas=[rua+(numero?", "+numero:""),bairro,cidade,"CEP: "+cep];
+  var comp=document.getElementById("end-complemento").value;
+  var ref=document.getElementById("end-referencia").value;
+  if(comp)linhas.push(comp);
+  if(ref)linhas.push("Ref: "+ref);
+  document.getElementById("end-salvo-texto").textContent=linhas.filter(Boolean).join("\n");
+  document.getElementById("end-salvo-box").style.display="block";
+  document.getElementById("endereco-form").style.display="none";
+  atualizarWpp();
+  verificarProntoParaEnviar();
+}
+
+function alterarEndereco(){
+  document.getElementById("end-salvo-box").style.display="none";
+  document.getElementById("endereco-form").style.display="block";
 }
 
 function carregarEnderecoSalvo(){
@@ -1047,7 +1079,18 @@ function carregarEnderecoSalvo(){
   document.getElementById("end-numero").value=e.numero||"";
   document.getElementById("end-complemento").value=e.complemento||"";
   document.getElementById("end-referencia").value=e.referencia||"";
-  if(e.cep)document.getElementById("end-resultado").style.display="block";
+  if(e.cep){
+    document.getElementById("end-resultado").style.display="block";
+    // Mostrar resumo salvo
+    var linhas=[e.rua+(e.numero?", "+e.numero:""),e.bairro,e.cidade,"CEP: "+e.cep];
+    if(e.complemento)linhas.push(e.complemento);
+    if(e.referencia)linhas.push("Ref: "+e.referencia);
+    document.getElementById("end-salvo-texto").textContent=linhas.filter(Boolean).join("\n");
+    document.getElementById("end-salvo-box").style.display="block";
+    document.getElementById("endereco-form").style.display="none";
+    atualizarWpp();
+    verificarProntoParaEnviar();
+  }
 }
 
 function validarEndereco(){
