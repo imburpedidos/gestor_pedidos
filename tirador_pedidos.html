@@ -1058,13 +1058,23 @@ function salvarEndereco(){
   document.getElementById("end-salvo-texto").textContent=linhas.filter(Boolean).join("\n");
   document.getElementById("end-salvo-box").style.display="block";
   document.getElementById("endereco-form").style.display="none";
+  if(tipoEntrega)selecionarEntrega(tipoEntrega);
   atualizarWpp();
   verificarProntoParaEnviar();
 }
 
 function alterarEndereco(){
+  // Limpar todos os campos
+  ["end-cep","end-rua","end-bairro","end-cidade","end-numero","end-complemento","end-referencia"].forEach(function(id){
+    var el=document.getElementById(id);
+    if(el)el.value="";
+  });
+  document.getElementById("end-resultado").style.display="none";
+  document.getElementById("end-erro").style.display="none";
   document.getElementById("end-salvo-box").style.display="none";
   document.getElementById("endereco-form").style.display="block";
+  document.getElementById("end-cep").focus();
+  verificarProntoParaEnviar();
 }
 
 function carregarEnderecoSalvo(){
@@ -1090,6 +1100,7 @@ function carregarEnderecoSalvo(){
     document.getElementById("endereco-form").style.display="none";
     atualizarWpp();
     verificarProntoParaEnviar();
+    if(tipoEntrega)selecionarEntrega(tipoEntrega);
   }
 }
 
